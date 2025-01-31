@@ -29,15 +29,15 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
-        //     'password' => ['required'],
-        // 'role' => ['required', 'string', 'in:client,admin'],
-        // 'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-        //     'balance' => ['nullable', 'numeric', 'min:0'], 
-        //     'maximumbid' => ['nullable', 'numeric', 'min:0'], 
-        // ]);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required'],
+            'role' => ['required', 'string', 'in:client,admin'],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'balance' => ['nullable', 'numeric', 'min:0'], 
+            'maximumbid' => ['nullable', 'numeric', 'min:0'], 
+        ]);
         if ($request->hasFile('profile_picture')) {
             $file = $request->file('profile_picture');
             $filePath = $file->storeAs('pfp', uniqid() . '.' . $file->getClientOriginalExtension(), 'public');

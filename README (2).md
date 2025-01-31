@@ -36,3 +36,8 @@ A real-time auction system where users can bid on items, and admins can manage l
 5. Run the app:  
    `php artisan serve`
    `npm run dev`
+
+   ## Future Improvements  
+- **Payment Gateway**: Integrate Stripe/PayPal for real transactions.  
+- **Email Notifications**: Send bid confirmations via Mailtrap/SendGrid.  
+- **Dockerize**: Containerize the app for easier deployment. 

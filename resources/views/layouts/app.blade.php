@@ -15,27 +15,21 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-purple-50">
+        <div class="min-h-screen bg-purple-50 dark:bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow-lg shadow-purple-100">
+                <header  class="bg-white shadow-lg shadow-purple-100 dark:bg-gray-800 dark:shadow-lg dark:shadow-purple-900">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        <h2 class="font-semibold text-xl text-purple-600 leading-tight">
                             {{ $header }}
-                        </h2>
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main class="py-8">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="bg-white rounded-lg shadow-sm shadow-purple-100 p-6">
-                        {{ $slot }}
-                    </div>
-                </div>
+            <main>
+                {{ $slot }}
             </main>
         </div>
     </body>
