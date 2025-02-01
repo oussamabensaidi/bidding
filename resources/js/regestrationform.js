@@ -22,6 +22,9 @@ const ProfilePicture = document.getElementById('pfp');
 const Balance = document.getElementById('balance');
 const clientMaximumBid = document.getElementById('client_bid');
   if (stepMenuOne.classList.contains('active')) {
+    document.getElementById('loginLink').style.display = 'none'; //disable the already have an account link
+
+
     if (!name) {
         alert("Full name is required.");
         return;
@@ -113,7 +116,7 @@ formBackBtn.addEventListener("click", function (event) {
   if (stepMenuTwo.classList.contains('active')) {
     stepMenuTwo.classList.remove('active');
     stepMenuOne.classList.add('active');
-
+    document.getElementById('loginLink').style.display = 'inline-block'; //enable the already have an account link
     stepTwo.classList.remove('active');
     stepOne.classList.add('active');
 
@@ -137,4 +140,21 @@ formBackBtn.addEventListener("click", function (event) {
                 </defs>
                 </svg>`
   }
+});
+
+
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// Check for saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    htmlElement.setAttribute('data-theme', savedTheme);
+}
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
 });

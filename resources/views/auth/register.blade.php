@@ -8,8 +8,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/regestrationform.js'])
 </head>
 
-
 <div class="main-wrapper">
+  <button class="dark-mode-toggle" id="themeToggle">
+      🌓
+  </button>
     <div class="form-wrapper">
       <form action="{{route('register')}}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -129,6 +131,12 @@
           </div>
   
           <div class="form-btn-wrapper">
+            <a href="{{route('login')}}" id="loginLink"
+            style="color: #555; text-decoration: none;"
+            onmouseover="this.style.color='#000'; this.style.textDecoration='underline';"
+            onmouseout="this.style.color='#555'; this.style.textDecoration='none';">
+           already have an account?
+         </a>
             <button class="back-btn">
               Back
             </button>
@@ -148,5 +156,6 @@
             </button>
           </div>
       </form>
+      
     </div>
   </div>

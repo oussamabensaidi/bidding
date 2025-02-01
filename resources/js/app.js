@@ -9,10 +9,10 @@ let themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 if (
   localStorage.getItem("color-theme") === "dark" || (!("color-theme" in localStorage) &&window.matchMedia("(prefers-color-scheme: dark)").matches)
 ) {
-  document.documentElement.classList.add("dark"); // <-- Add this line
+  document.documentElement.classList.add("dark"); 
   themeToggleLightIcon.classList.remove("hidden");
 } else {
-  document.documentElement.classList.remove("dark"); // <-- Add this line (optional, for clarity)
+  document.documentElement.classList.remove("dark"); 
   themeToggleDarkIcon.classList.remove("hidden");
 }
 

@@ -52,7 +52,9 @@
             <x-text-input id="maximumbid" name="maximumbid" type="text" class="mt-2 block w-full" :value="old('maximumbid', $user->maximumbid)" required autocomplete="maximumbid" />
             <x-input-error class="mt-2" :messages="$errors->get('maximumbid')" />
         </div>
-
+        @if ($user->profile_picture)
+        <img src="{{ Storage::url($user->profile_picture) }}" alt="Profile Picture">
+    @endif
         <!-- Save Button -->
         <div class="col-span-1 md:col-span-2 flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

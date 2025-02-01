@@ -25,6 +25,10 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'password' => ['sometimes', 'required'], // Required on store, optional on update
+            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'balance' => ['nullable', 'numeric', 'min:0'], 
+            'maximumbid' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }
