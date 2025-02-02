@@ -142,11 +142,10 @@ formBackBtn.addEventListener("click", function (event) {
   }
 });
 
-
+// dark mode toggle
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
 
-// Check for saved theme
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
     htmlElement.setAttribute('data-theme', savedTheme);

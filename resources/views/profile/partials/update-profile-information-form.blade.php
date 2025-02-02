@@ -28,16 +28,14 @@
         </div>
 
         <!-- Profile Picture -->
-        <div class="col-span-1 md:col-span-2">
-            <x-input-label for="profile_picture" :value="__('Profile Picture')" />
+        @if (!$user->profile_picture)
+            <div class="col-span-1 md:col-span-2">
+             <x-input-label for="profile_picture" :value="__('Profile Picture')" />
             <x-text-input id="profile_picture" name="profile_picture" type="file" class="mt-2 block w-full" autocomplete="profile_picture" />
             <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
-            @if($user->profile_picture)
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Current: ') }} {{ basename($user->profile_picture) }}
-                </p>
-            @endif
-        </div>
+            </div>
+            
+        @endif
 
         <!-- Balance -->
         <div>
@@ -47,14 +45,30 @@
         </div>
 
         <!-- Maximum Bid -->
-        <div>
+        @if ($user->role==='client')
+         <div>
             <x-input-label for="maximumbid" :value="__('Maximum Bid')" />
             <x-text-input id="maximumbid" name="maximumbid" type="text" class="mt-2 block w-full" :value="old('maximumbid', $user->maximumbid)" required autocomplete="maximumbid" />
             <x-input-error class="mt-2" :messages="$errors->get('maximumbid')" />
-        </div>
-        @if ($user->profile_picture)
+        </div>   
+        @endif
+        
+        {{-- @if ($user->profile_picture)
         <img src="{{ Storage::url($user->profile_picture) }}" alt="Profile Picture">
-    @endif
+    @endif --}}
+    @if ($user->profile_picture)
+    <div class="profile-picture">
+        <img src="{{ Storage::url($user->profile_picture) }}" alt="Profile Picture">
+        <div class="mt-4">
+            <x-input-label for="profile_picture" :value="__('Do you want to change profile picture?')" />
+            <x-text-input id="profile_picture" name="profile_picture" type="file" class="mt-2 block w-full" autocomplete="profile_picture" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
+            {{-- <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                {{ __('Current: ') }} {{ basename($user->profile_picture) }}
+            </p> --}}
+        </div>
+    </div>
+@endif
         <!-- Save Button -->
         <div class="col-span-1 md:col-span-2 flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
@@ -69,5 +83,18 @@
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
+
     </form>
+    <style>
+        .profile-container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .profile-picture {
+            margin-left: 20px; /* Adjust the margin as needed */
+        }
+        .profile-picture img {
+            max-width: 150px; 
+        }
+    </style>
 </section>
