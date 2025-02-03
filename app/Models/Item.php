@@ -7,12 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'starting_bid',
+        'current_bid',
         'end_time',
-        'user_id',
+        'status',
+        'shipping_status',
+        'item_pic'
     ];
+    protected $casts = [
+        'end_time' => 'datetime',
+        'starting_bid' => 'decimal:2',
+        'current_bid' => 'decimal:2',
+    ]; // this is for better security ;)
     public function user() {
         return $this->belongsTo(User::class);
     }
