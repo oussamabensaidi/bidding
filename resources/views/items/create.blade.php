@@ -1,4 +1,5 @@
 <!-- resources/views/items/create.blade.php -->
+<x-app-layout>
 <form method="POST" action="{{ route('items.store') }}" enctype="multipart/form-data">
     @csrf
     <div>
@@ -17,25 +18,18 @@
         <label>End Time</label>
         <input type="datetime-local" name="end_time" value="{{ old('end_time') }}" required>
     </div>
-    <div>
-        <label>Status</label>
-        <select name="status" required>
-            <option value="active">Active</option>
-            <option value="sold">Sold</option>
-            <option value="expired">Expired</option>
-        </select>
-    </div>
-    <div>
+    {{-- <div>
         <label>Shipping Status</label>
         <select name="shipping_status" required>
             <option value="pending">Pending</option>
             <option value="shipped">Shipped</option>
             <option value="delivered">Delivered</option>
         </select>
-    </div>
+    </div> --}}
     <div>
         <label>Item Image</label>
         <input type="file" name="item_pic">
     </div>
     <button type="submit">Create Item</button>
 </form>
+</x-app-layout>

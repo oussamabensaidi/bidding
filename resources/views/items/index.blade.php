@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
 <div class="container mx-auto px-4">
     <h1 class="text-3xl font-bold mb-6">All Items</h1>
     
@@ -69,4 +67,4 @@
         {{ $items->links() }}
     </div>
 </div>
-@endsection
+</x-app-layout>

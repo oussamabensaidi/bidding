@@ -36,7 +36,7 @@ class ProfileController extends Controller
         if ($request->hasFile('profile_picture')) {
             if ($user->profile_picture) {
                 Storage::disk('public')->delete($user->profile_picture);
-                // return dd($user->profile_picture);
+                
             }
     
             // Store new profile picture
