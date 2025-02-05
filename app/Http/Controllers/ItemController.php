@@ -41,9 +41,7 @@ class ItemController extends Controller
             $file = $request->file('item_pic');
             $filePath = $file->storeAs('items_pic', uniqid() . '.' . $file->getClientOriginalExtension(), 'public');
             $validated['item_pic'] = $filePath;
-        } 
-
-
+        }
         $validated['user_id'] = auth()->user()->id;
         $validated['current_bid'] = $validated['starting_bid'];
         // Set default statuses
@@ -52,7 +50,7 @@ class ItemController extends Controller
 
         Item::create($validated);
 
-        return redirect()->route('items.index')->with('success', 'Item created successfully.');
+    return redirect()->route('items.index')->with('success', 'Item created successfully.');
     }
 
     public function show(Item $item)
@@ -97,7 +95,7 @@ class ItemController extends Controller
     
             // Store new profile picture
             $file = $request->file('item_pic');
-            $filePath = $file->storeAs('pfp', uniqid() . '.' . $file->getClientOriginalExtension(), 'public');
+            $filePath = $file->storeAs('items_pic', uniqid() . '.' . $file->getClientOriginalExtension(), 'public');
             // $user->item_pic = $filePath;
             $validated['item_pic'] = $filePath;
         }
