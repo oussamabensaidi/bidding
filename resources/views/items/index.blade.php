@@ -1,6 +1,6 @@
 <x-app-layout>
 <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold mb-6">All Items</h1>
+    <h1 class="text-3xl font-bold mb-6 dark:text-gray-100">All Items</h1>
     
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -29,7 +29,7 @@
                 <tr>
                     <td class="py-2 px-4 border-b">
                         @if($item->item_pic)
-                            <img src="{{ asset($item->item_pic) }}" alt="{{ $item->name }}" class="w-20 h-20 object-cover">
+                            <img src="{{ Storage::url($item->item_pic) }}" alt="{{ $item->name }}" class="w-20 h-20 object-cover">
                         @else
                             <span class="text-gray-500">No image</span>
                         @endif
@@ -66,5 +66,6 @@
     <div class="mt-4">
         {{ $items->links() }}
     </div>
+    
 </div>
 </x-app-layout>
