@@ -27,7 +27,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $user->fill($request->except('profile_picture')); // this is essentially the same as the commented out code below except for it 
-        // $request->user()->fill($request->validated());
+        
         
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -39,7 +39,6 @@ class ProfileController extends Controller
                 
             }
     
-            // Store new profile picture
             $file = $request->file('profile_picture');
             $filePath = $file->storeAs('pfp', uniqid() . '.' . $file->getClientOriginalExtension(), 'public');
             $user->profile_picture = $filePath;

@@ -30,18 +30,27 @@ class ItemController extends Controller
             'description' => 'required|string',
             'starting_bid' => 'required|numeric|min:0',
             'end_time' => 'required|date',
-            'item_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:11000'
+            'item_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
 
-        // if ($request->hasFile('item_pic')) {
-        //     $path = $request->file('item_pic')->store('public/items');
-        //     $validated['item_pic'] = str_replace('public/', 'storage/', $path);
-        // }
+
+        
+
+
+
+
+
 
         if ($request->hasFile('item_pic')) {
-            $file = $request->file('item_pic');
-            $filePath = $file->storeAs('items_pic', auth()->user()->id.auth()->user()->name. '.' . $file->getClientOriginalExtension(), 'public');
-            $validated['item_pic'] = $filePath;
+            $fullName = [];
+            $files = $request->file('item_pic');
+            foreach($files as $file){
+            // $filename = $file->getClientOriginalName();
+            $filePath = $file->storeAs('items_pic', auth()->user()->id.auth()->user()->name. '.' . $file->getClientOriginalExtension().'|', 'public');
+            $fullName[] =+ $filePath;
+        }
+            $validated['item_pic'] = $fullName;
+            return dd($fullName);
         }
         $validated['user_id'] = auth()->user()->id;
         $validated['current_bid'] = $validated['starting_bid'];
@@ -75,7 +84,7 @@ class ItemController extends Controller
             'description' => 'required|string',
             'starting_bid' => 'required|numeric|min:0',
             'end_time' => 'required|date',
-            'item_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'item_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ]);
 
         if ($request->hasFile('item_pic')) {
