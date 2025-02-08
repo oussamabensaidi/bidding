@@ -125,16 +125,23 @@ class ItemController extends Controller
         $item->delete();
         return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
     }
-    public function deleteImage(Item $item)
-    {
-        $this->authorize('delete', $item);
+    public function deleteImage(Item $item, Request $request)
+{
+    // $this->authorize('delete', $item);
 
-        if ($item->item_pic) {
-            Storage::delete(str_replace('storage/', 'public/', $item->item_pic));
-            $item->item_pic = null;
-            $item->save();
-        }
+    $itemName = $request->input('item_name');
+    Storage::delete(str_replace('storage/', 'public/', $itemName));
+    
+    $pictures = $item->item_pic; 
+    
+    
+    $pictures = array_filter($pictures, fn($pic) => $pic !== $itemName);
 
-        return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');
-    }
+    
+    $item->item_pic = array_values($pictures); // this function reindex the array so there is no gap if the delted image in middle or start of array
+    $item->save();
+
+    return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');
+}
+
 }
