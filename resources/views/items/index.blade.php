@@ -28,11 +28,18 @@
                 @foreach($items as $item)
                 <tr>
                     <td class="py-2 px-4 border-b">
-                        @if($item->item_pic)
-                            <img src="{{ Storage::url($item->item_pic) }}" alt="{{ $item->name }}" class="w-20 h-20 object-cover">
-                        @else
-                            <span class="text-gray-500">No image</span>
-                        @endif
+                        @php
+                        $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+                    @endphp
+                    
+                    @if (!empty($pics))
+                        {{-- @foreach ($pics as $pic) --}}
+                            <img src="{{ Storage::url($pics[0]) }}" alt="{{ $item->name }}" class="w-20 h-20 object-cover">
+                        {{-- @endforeach --}}
+                    @else
+                        <span class="text-gray-500">No image</span>
+                    @endif
+                    
                     </td>
                     <td class="py-2 px-4 border-b">{{ $item->name }}</td>
                     <td class="py-2 px-4 border-b">${{ number_format($item->current_bid, 2) }}</td>

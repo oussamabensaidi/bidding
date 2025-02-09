@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         'update' => 'items.update',
         'destroy' => 'items.destroy',
     ]);
+    Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
 });
 
 
