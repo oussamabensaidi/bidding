@@ -31,7 +31,7 @@ class ItemController extends Controller
             'starting_bid' => 'required|numeric|min:0',
             'end_time' => 'required|date',
             'item_pic' => 'nullable|array|max:6',
-            'item_pic.*' => 'nullable|image|mimes:jpeg,png,jpg,gif'
+            'item_pic.*' => 'nullable|image|mimes:jpeg,png,jpg,gif' // .* is used to validate each item in the array of item pics
         ]);
 
 
@@ -85,63 +85,69 @@ class ItemController extends Controller
     }
 
     public function update(Request $request, Item $item)
-    {
-        $this->authorize('update', $item);
+{
+    $this->authorize('update', $item);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'starting_bid' => 'required|numeric|min:0',
-            'end_time' => 'required|date',
-            'item_pic' => 'nullable|array|max:6',
-            'item_pic.*' => 'nullable|image|mimes:jpeg,png,jpg,gif'
-        ]);
+    $validated = $request->validate([
+        'name'         => 'required|string|max:255',
+        'description'  => 'required|string',
+        'starting_bid' => 'required|numeric|min:0',
+        'end_time'     => 'required|date',
+        'item_pic'     => 'nullable|array|max:6',
+        'item_pic.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif'
+    ]);
 
-        if ($request->hasFile('item_pic')) {
-            if ($item->item_pic) {
-                Storage::disk('public')->delete($item->item_pic);
-                
-            }
-    
-            // Store new profile picture
-            $file = $request->file('item_pic');
-            $filePath = $file->storeAs('items_pic',  auth()->user()->id.auth()->user()->name. '.' . $file->getClientOriginalExtension(), 'public');
-            // $user->item_pic = $filePath;
-            $validated['item_pic'] = $filePath;
+    if ($request->hasFile('item_pic')) {
+        $paths = [];
+        // Ensure $files is always an array
+        $files = $request->file('item_pic');
+        if (!is_array($files)) {
+            $files = [$files];
         }
-        $item->update($validated);
-
-        return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+        foreach ($files as $file) {
+            if ($file) {  // Skip null entries if any
+                $fileName = auth()->id() . '_' . now()->timestamp . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $paths[] = $file->storeAs('items_pic', $fileName, 'public');
+            }
+        }
+        // Save file paths as a pipe-separated string
+        $validated['item_pic'] = implode("|", $paths);
     }
+
+    $item->update($validated);
+
+    return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+}
 
     public function destroy(Item $item)
     {
         $this->authorize('delete', $item);
-
+        $pictures = explode('|', $item->item_pic);
         if ($item->item_pic) {
-            Storage::delete(str_replace('storage/', 'public/', $item->item_pic));
+            foreach($pictures as $pic) {
+                Storage::disk('public')->delete($pic);
+            }
         }
-        
         $item->delete();
         return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
     }
     public function deleteImage(Item $item, Request $request)
-{
-    // $this->authorize('delete', $item);
-
-    $itemName = $request->input('item_name');
-    Storage::delete(str_replace('storage/', 'public/', $itemName));
-    
-    $pictures = $item->item_pic; 
-    
-    
-    $pictures = array_filter($pictures, fn($pic) => $pic !== $itemName);
-
-    
-    $item->item_pic = array_values($pictures); // this function reindex the array so there is no gap if the delted image in middle or start of array
-    $item->save();
-
-    return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');
-}
+    {
+        $this->authorize('delete', $item);
+        $request->validate(['item_name' => 'required|string']);
+        $itemName = $request->input('item_name');
+        $oldPictures = explode('|', $item->item_pic);
+        // Remove the image from the array
+        $pictures = array_filter($oldPictures, fn($pic) => $pic !== $itemName);
+        // Only delete the file if it was originally part of the item
+        if (in_array($itemName, $oldPictures)) {
+            Storage::disk('public')->delete($itemName);
+        }
+        // Update the item's pictures
+        $item->item_pic = implode('|', $pictures);
+        $item->save();
+        // return dd($item, $pictures, $oldPictures, $itemName);
+        return redirect()->route('items.show', $item)->with('success', 'Image deleted successfully.');
+    }
 
 }

@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/items', ItemController::class)->names([
-        'index' => 'items.index',
+        'index' => 'items',
         'create' => 'items.create',
         'store' => 'items.store',
         'show' => 'items.show',
@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
         'update' => 'items.update',
         'destroy' => 'items.destroy',
     ]);
-    Route::delete('/items/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
+    Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
 });
 
 

@@ -16,6 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('items')" :active="request()->routeIs('items')" class="text-purple-400 hover:text-purple-600 focus:text-purple-600">
+                        {{ __('items') }}
+                    </x-nav-link>
+                </div>
             </div>
            
             <!-- Settings Dropdown -->
