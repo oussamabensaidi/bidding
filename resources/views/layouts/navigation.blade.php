@@ -21,6 +21,13 @@
                         {{ __('items') }}
                     </x-nav-link>
                 </div>
+                @can('create', $items)
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('items.create')" :active="request()->routeIs('items.create')" class="text-purple-400 hover:text-purple-600 focus:text-purple-600">
+                        {{ __('create items') }}
+                    </x-nav-link>
+                </div>
+                @endcan
             </div>
            
             <!-- Settings Dropdown -->

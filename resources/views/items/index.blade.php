@@ -11,14 +11,14 @@
             {{ session('success') }}
         </div>
     @endif
-
-<a href="{{ route('items.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-4 inline-block">
-    Create New Item
-</a>
-
+    @can('create', $items)
+        <a href="{{ route('items.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-4 inline-block">
+            Create New Item
+        </a>
+    @endcan
    
 
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto mt-4 mb-4 inline-block w-full">
         <table class="min-w-full bg-white dark:bg-gray-800">
             <thead class="bg-gray-200 dark:bg-gray-700">
                 <tr>

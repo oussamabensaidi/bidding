@@ -15,16 +15,21 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::where('user_id', auth()->user()->id)->paginate(10);
+        if (auth()->user()->role == 'client') {
+            $items = Item::paginate(10);// Show all items to the clients 
+        }
         return view('items.index', compact('items'));
     }
 
     public function create()
     {
+        $this->authorize('create', Item::class); // Check if the user is authorized to create an item
         return view('items.create');
     }
 
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
