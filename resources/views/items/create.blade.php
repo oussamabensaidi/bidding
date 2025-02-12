@@ -39,28 +39,52 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Item Image</label>
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg">
-                        <div class="space-y-1 text-center">
+                        <div class="space-y-1 text-center" id="image-input">
                             <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <div class="flex text-sm text-gray-600 dark:text-gray-400">
                                 <label class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                     <span>Upload a file</span>
-                                    <input type="file" class="sr-only" name="item_pic[]" multiple >
+                                    <input type="file" class="sr-only" id="file" name="item_pic[]" multiple onchange="readURL(this)">
                                 </label>
                                 <p class="pl-1">or drag and drop</p>
                             </div>
                             <p class="text-xs text-gray-500 dark:text-gray-400"> up to 10MB</p>
                         </div>
+                        <div style="position: relative; display: none;" id="image-preview">
+                            <button type="button" onclick="choseAgain()" class="absolute top-0 right-0 bg-blue-600 dark:bg-blue-700 text-white dark:text-gray-800 rounded-md px-2 py-1 text-xs" >Click Here To Change</button>
+                            <img src="" alt="No Image" id="img" style=''>
+                        </div>
                     </div>
+                    
                 </div>
+                
             </div>
-
+                
             <!-- Submit Button -->
             <button type="submit" 
                 class="w-full bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                 Create Item
             </button>
         </form>
+        <script>
+            function readURL(input) {
+                document.getElementById("image-input").style.display = "none";
+                document.querySelector("#image-preview").style.display = "block";
+              if (input.files && input.files[0]) {
+              
+                var reader = new FileReader();
+                reader.onload = function (e) { 
+                  document.querySelector("#img").setAttribute("src",e.target.result);
+                };
+          
+                reader.readAsDataURL(input.files[0]); 
+              }
+            }
+            function choseAgain(){
+                document.getElementById('file').click();
+            }
+            </script>
     </div>
 </x-app-layout>
