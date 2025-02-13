@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="flex justify-between items-center mt-6">
-                    <a href="{{ route('items.index') }}" class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">
+                    <a href="{{ route('items') }}" class="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100">
                         ← Back to Items
                     </a>
                     <div class="space-x-2">

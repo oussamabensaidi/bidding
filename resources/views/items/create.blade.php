@@ -46,15 +46,14 @@
                             <div class="flex text-sm text-gray-600 dark:text-gray-400">
                                 <label class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                     <span>Upload a file</span>
-                                    <input type="file" class="sr-only" id="file" name="item_pic[]" multiple onchange="readURL(this)">
+                                    <input type="file" class="sr-only" id="item_file" name="item_pic[]" multiple >
                                 </label>
                                 <p class="pl-1">or drag and drop</p>
                             </div>
                             <p class="text-xs text-gray-500 dark:text-gray-400"> up to 10MB</p>
                         </div>
                         <div style="position: relative; display: none;" id="image-preview">
-                            <button type="button" onclick="choseAgain()" class="absolute top-0 right-0 bg-blue-600 dark:bg-blue-700 text-white dark:text-gray-800 rounded-md px-2 py-1 text-xs" >Click Here To Change</button>
-                            <img src="" alt="No Image" id="img" style=''>
+                            <div class="preview-area"></div>
                         </div>
                     </div>
                     
@@ -69,22 +68,7 @@
             </button>
         </form>
         <script>
-            function readURL(input) {
-                document.getElementById("image-input").style.display = "none";
-                document.querySelector("#image-preview").style.display = "block";
-              if (input.files && input.files[0]) {
-              
-                var reader = new FileReader();
-                reader.onload = function (e) { 
-                  document.querySelector("#img").setAttribute("src",e.target.result);
-                };
-          
-                reader.readAsDataURL(input.files[0]); 
-              }
-            }
-            function choseAgain(){
-                document.getElementById('file').click();
-            }
+            
             </script>
     </div>
 </x-app-layout>

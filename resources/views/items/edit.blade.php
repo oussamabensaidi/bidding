@@ -1,8 +1,45 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto px-4 py-8">
-        <form method="POST" action="{{ route('items.update', $item) }}" enctype="multipart/form-data" 
-              class="space-y-6 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 rounded-xl p-8">
+        <div class="space-y-6 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 rounded-xl p-8">
+
             <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Edit Item</h1>
+        @if($item->item_pic)
+        @php
+        $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+        @endphp 
+    <div class="grid grid-cols-3 gap-4 mb-4">
+        @if (!empty($pics))
+            @foreach ($pics as $pic)
+                <div class="max-w-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm m-4 relative">
+                    <a href="{{ Storage::url($pic) }}" target="_blank">
+                        <img src="{{ Storage::url($pic) }}" alt="{{ $item->name }}" class="w-full h-40 object-cover rounded-t-lg">
+                    </a>
+                    <span class="absolute top-0 right-0">
+                        <form action="{{ route('items.delete-image', $item->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="item_id" value="{{ $item->id }}">
+                            <input type="hidden" name="item_name" value="{{ $pic }}"> 
+                            <button class="bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-500 text-white p-2 rounded" type="submit"
+                            onclick="return confirm('are you sure you wanna delete this picture ?')">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323">
+                                    <path d="M280-440h400v-80H280v80ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </span>
+                </div>
+            @endforeach
+        @else
+            <span class="text-gray-500 dark:text-gray-300">No image</span>
+        @endif
+    </div>
+        @endif
+
+
+
+        
+        <form method="POST" action="{{ route('items.update', $item) }}" enctype="multipart/form-data"class="">
             @csrf
             @method('PUT')
     
@@ -52,12 +89,7 @@
                 </div>
     
                 <!-- Existing Image -->
-                @if($item->item_pic)
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Current Image:</label>
-                        <img src="{{ Storage::url($item->item_pic) }}" alt="Current Image" class="w-32 h-32 object-cover rounded">
-                    </div>
-                @endif
+               
     
                 <!-- Image Upload -->
                 <div>
@@ -84,7 +116,7 @@
                         class="w-full bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                         Update Item
                     </button>
-                    <a href="{{ route('items.index') }}" 
+                    <a href="{{ route('items') }}" 
                        class="w-full ml-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300">
                         Cancel
                     </a>
@@ -92,4 +124,5 @@
             </div>
         </form>
     </div>
+</div>
     </x-app-layout>

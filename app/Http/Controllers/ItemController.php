@@ -38,16 +38,7 @@ class ItemController extends Controller
             'item_pic' => 'nullable|array|max:6',
             'item_pic.*' => 'nullable|image|mimes:jpeg,png,jpg,gif' // .* is used to validate each item in the array of item pics
         ]);
-
-
-        
-
-
-
-
-
-
-        if ($request->hasFile('item_pic')) {
+         if ($request->hasFile('item_pic')) {
             $fullName = [];
             $files = $request->file('item_pic');
         
@@ -74,7 +65,7 @@ class ItemController extends Controller
 
         Item::create($validated);
 
-    return redirect()->route('items.index')->with('success', 'Item created successfully.');
+    return redirect()->route('items')->with('success', 'Item created successfully.');
     }
 
     public function show(Item $item)
@@ -116,13 +107,17 @@ class ItemController extends Controller
             }
         }
         // Save file paths as a pipe-separated string
-        $validated['item_pic'] = implode("|", $paths);
+        $validated['item_pic'] = implode("|", $paths). '|' . $item->item_pic;
     }
 
     $item->update($validated);
 
-    return redirect()->route('items.index')->with('success', 'Item updated successfully.');
+    return redirect()->route('items')->with('success', 'Item updated successfully.');
 }
+
+
+
+
 
     public function destroy(Item $item)
     {
@@ -134,8 +129,12 @@ class ItemController extends Controller
             }
         }
         $item->delete();
-        return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
+        return redirect()->route('items')->with('success', 'Item deleted successfully.');
     }
+
+
+
+
     public function deleteImage(Item $item, Request $request)
     {
         $this->authorize('delete', $item);
@@ -151,8 +150,11 @@ class ItemController extends Controller
         // Update the item's pictures
         $item->item_pic = implode('|', $pictures);
         $item->save();
-        // return dd($item, $pictures, $oldPictures, $itemName);
-        return redirect()->route('items.show', $item)->with('success', 'Image deleted successfully.');
+        // return dd($item, $pictures, $oldPictures, $itemName); this saved me a lot of headaches when debugging 😵
+
+    return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');
+
+        
     }
 
 }
