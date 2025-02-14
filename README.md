@@ -11,7 +11,7 @@ A real-time auction system where users can bid on items, and admins can manage l
 ## Tech Stack  
 - Laravel  
 - PHP  
-- MySQL  
+- MySQL
 
 ## Installation   
 1. Install dependencies:  

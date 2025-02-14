@@ -95,12 +95,13 @@
           <div class="form-step-2">
               <div>
                         <label for="pfp" class="form-label">Profile picture</label>
-                        <input
+                        {{-- <input
                         type="file"
-                        name="profile_picture"
+                        
                         id="pfp"
                         class="form-input"
-                        />
+                        /> --}}
+                        <input type="file"  accept="image/*" id="file" class="form-input" name="profile_picture" onchange="loadFile(event)" >
                     </div>
                     <div class="input-flex"> 
                       <div>
@@ -118,9 +119,38 @@
                       id="client_bid"
                       name="maximumbid"
                       class="form-input"/>
+
+
+
                     </div> 
                     </div>
-          </div>
+{{-- <p><label for="file" style="cursor: pointer;">Upload Image</label></p> --}}
+{{-- <p><img id="output" width="200" /></p> --}}
+
+
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <div class="form-step-3">
             <div class="form-confirm">
               <p>
