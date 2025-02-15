@@ -16,7 +16,9 @@ export default {
             },
         },
     },
-
+    corePlugins: {
+        aspectRatio: true, 
+      },
     plugins: [forms],
     darkMode: 'class'
 };

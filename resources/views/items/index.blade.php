@@ -16,9 +16,7 @@
             Create New Item
         </a>
     @endcan
-   
-
-    <div class="overflow-x-auto mt-4 mb-4 inline-block w-full">
+     {{-- <div class="overflow-x-auto mt-4 mb-4 inline-block w-full">
         <table class="min-w-full bg-white dark:bg-gray-800">
             <thead class="bg-gray-200 dark:bg-gray-700">
                 <tr>
@@ -74,8 +72,111 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
+    </div> --}}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      
+        @foreach ($items as $item)
+          @php
+            $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+        @endphp
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {{-- Image Container with Fixed Size --}}
+            <div class="relative w-full h-48">
+              <img 
+                src="{{ Storage::url($pics[0]) }}"
+                alt="{{ $item->name }}"
+                class="w-full h-full object-cover"
+              >
+            </div>
+      
+            {{-- Content Section --}}
+            <div class="p-4 text-center">
+              <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
+              <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                View Details
+              </button>
+            </div>
+          </div>
+        @endforeach
+      </div>
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="mt-4">
         {{ $items->links() }}
     </div>
