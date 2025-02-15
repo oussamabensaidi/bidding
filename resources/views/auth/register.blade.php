@@ -94,47 +94,21 @@
   
           <div class="form-step-2">
               <div>
-                        <label for="pfp" class="form-label">Profile picture</label>
-                        {{-- <input
-                        type="file"
-                        
-                        id="pfp"
-                        class="form-input"
-                        /> --}}
-                        <input type="file"  accept="image/*" id="file" class="form-input" name="profile_picture" onchange="loadFile(event)" >
-                    </div>
-                    <div class="input-flex"> 
-                      <div>
+                        <label for="file" class="form-label">Profile picture</label>
+                        <input type="file"  accept="image/*" id="file" class="form-input" name="profile_picture"  >
+              </div>
+              <div class="input-flex"> 
+                  <div>
                         <label for="balance" class="form-label">Enter you balance</label>
-                        <input 
-                        type="number"
-                        name="balance"
-                        id="balance"
-                        class="form-input"/>
-                      </div>
-                      <div id="client_bid_div">
+                        <input type="number" name="balance"id="balance" class="form-input"/>
+                  </div>
+                  <div id="client_bid_div">
                       <label for="balance" class="form-label">Maximum Bid $</label>
-                      <input 
-                      type="number"
-                      id="client_bid"
-                      name="maximumbid"
-                      class="form-input"/>
-
-
-
-                    </div> 
-                    </div>
-{{-- <p><label for="file" style="cursor: pointer;">Upload Image</label></p> --}}
-{{-- <p><img id="output" width="200" /></p> --}}
-
-
-<script>
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
-};
-</script>
- </div>
+                      <input  type="number"  id="client_bid" name="maximumbid"  class="form-input"/>
+                  </div> 
+              </div>
+                <p><img id="output" width="200" /></p>
+            </div>
 
 
 

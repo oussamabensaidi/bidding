@@ -157,3 +157,14 @@ themeToggle.addEventListener('click', () => {
     htmlElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 });
+
+let file_input = document.getElementById('file');
+  file_input.addEventListener('change', function() {
+    let file = this.files[0];
+    let reader = new FileReader();
+    reader.onload = function() {
+      let img = document.getElementById('output');
+      img.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+  });
