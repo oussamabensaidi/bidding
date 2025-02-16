@@ -152,9 +152,15 @@ class ItemController extends Controller
         $item->save();
         // return dd($item, $pictures, $oldPictures, $itemName); this saved me a lot of headaches when debugging 😵
 
-    return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');
-
-        
+    return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');   
     }
+public function clientShow(Item $item)
+{
+    $this->authorize('view', $item);
+    return view('items.show', compact('item'));
+}
+
+
+
 
 }

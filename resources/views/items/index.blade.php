@@ -74,109 +74,46 @@
         </table>
     </div> --}}
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-      
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 ">
         @foreach ($items as $item)
           @php
             $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
         @endphp
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-purple-300 dark:border-purple-700 shadow-lg" >
             {{-- Image Container with Fixed Size --}}
-            <div class="relative w-full h-48">
-              <img 
-                src="{{ Storage::url($pics[0]) }}"
-                alt="{{ $item->name }}"
-                class="w-full h-full object-cover"
-              >
+            <div class="relative w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+              @if (!empty($pics))
+                <img 
+                  src="{{ Storage::url($pics[0]) }}"
+                  alt="{{ $item->name }}"
+                  class="w-38 h-full object-cover"
+                >
+              @else
+                <span class="text-gray-500 dark:text-gray-300">No image</span>
+              @endif
             </div>
       
             {{-- Content Section --}}
             <div class="p-4 text-center">
+                <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
-              <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-                View Details
-              </button>
+              @can('create', App\Models\Item::class)
+    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+        <a href="{{route('items.show',$item->id)}}">
+        View Details</a>
+    </button>
+@else
+    <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
+         <a href="">Bet $$$</a>
+    </button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
+       <a href="{{route('items.clientShow',$item->id)}}">see item</a>
+    </button>
+@endcan
             </div>
           </div>
         @endforeach
       </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="mt-4">
         {{ $items->links() }}
     </div>
