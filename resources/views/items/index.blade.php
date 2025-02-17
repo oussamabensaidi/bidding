@@ -99,7 +99,7 @@
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
               @can('create', App\Models\Item::class)
     <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-        <a href="{{route('items.show',$item->id)}}">
+        <a href="{{route('items.show',$item)}}">
         View Details</a>
     </button>
 @else
@@ -107,7 +107,7 @@
          <a href="">Bet $$$</a>
     </button>
     <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
-       <a href="{{route('items.clientShow',$item->id)}}">see item</a>
+       <a href="{{route('items.clientShow',$item)}}">see item</a>
     </button>
 @endcan
             </div>

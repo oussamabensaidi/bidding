@@ -3,9 +3,12 @@
 <div class="container mx-auto p-4">
     <div class="relative max-w-2xl mx-auto">
         <!-- Image Container -->
+        @php
+                    $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+                @endphp 
         <div class="relative">
             <img id="current-image" 
-                 src="{{ asset($pic[0]) }}" 
+                 src="{{ Storage::url($pics[0]) }}" 
                  alt="Gallery image" 
                  class="w-full h-96 object-cover rounded-lg shadow-lg transition-opacity duration-300">
         </div>
@@ -34,7 +37,7 @@
     const nextBtn = document.getElementById('next-btn');
 
     // Image array - replace with your Laravel image paths
-    const images = @json($images); // Pass images array from controller
+    const images = @json($item->item_pic); // Pass images array from controller
     let currentIndex = 0;
 
     // Function to update image

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -54,12 +52,8 @@ class ItemController extends Controller
         
             $validated['item_pic'] = implode("|", $fullName);
         }
-
-        
-
         $validated['user_id'] = auth()->user()->id;
         $validated['current_bid'] = $validated['starting_bid'];
-        
         $validated['status'] = 1;
         $validated['shipping_status'] = 'pending';
 
@@ -156,11 +150,6 @@ class ItemController extends Controller
     }
 public function clientShow(Item $item)
 {
-    $this->authorize('view', $item);
-    return view('items.show', compact('item'));
+    return view('items.clientShow', compact('item'));
 }
-
-
-
-
 }
