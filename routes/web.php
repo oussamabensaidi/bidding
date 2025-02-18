@@ -1,8 +1,11 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ItemController; // Ensure this class exists in the specified namespace
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CaptchaController;
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +30,11 @@ Route::middleware('auth')->group(function () {
     ]);
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
+
+
+    Route::get('/verify-human', [CaptchaController::class, 'show'])->name('captcha.show');
+    Route::post('/verify-human', [CaptchaController::class, 'verify'])->name('captcha.verify');
+
 });
 
 

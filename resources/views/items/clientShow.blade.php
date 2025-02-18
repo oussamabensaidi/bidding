@@ -37,12 +37,12 @@
     const nextBtn = document.getElementById('next-btn');
 
     // Image array - replace with your Laravel image paths
-    const images = @json($item->item_pic); // Pass images array from controller
+    const images = @json($pics); // Pass images array from controller
     let currentIndex = 0;
 
     // Function to update image
     function updateImage(index) {
-        currentImage.src = "{{ asset('') }}" + images[index];
+        currentImage.src = "{{ Storage::url('') }}" + images[index];
         currentImage.alt = `Image ${index + 1}`;
     }
 
