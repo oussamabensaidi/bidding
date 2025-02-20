@@ -14,19 +14,18 @@ class CaptchaController extends Controller
 
     public function verify(Request $request)
     {
-        
-        $recaptchaSecret = env('NOCAPTCHA_SECRET');
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => $recaptchaSecret,
-            'response' => $request->input('g-recaptcha-response'),
+            'secret' => env('NOCAPTCHA_SECRET'),
+            'response' => $request->input('g-recaptcha-response'), // Different key for v2
             'remoteip' => $request->ip(),
         ]);
-
+    
         $body = $response->json();
-
-        if (!$body['success'] || $body['score'] < 0.5) {
+    
+        if (!$body['success']) { // v2 doesn't use "score"
             return back()->withErrors(['captcha' => 'reCAPTCHA verification failed.']);
         }
+    
         return redirect()->route('items');
     }
 }
