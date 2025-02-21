@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <form action="{{ route('captcha.verify') }}" method="POST" class="bg-white p-6 rounded shadow-md">
+    <form action="{{ route('captcha.verify', ['item' => $item->id]) }}" method="POST" class="bg-white p-6 rounded shadow-md">
         @csrf
 
         @if ($errors->has('captcha'))
