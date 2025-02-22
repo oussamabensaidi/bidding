@@ -3,7 +3,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CaptchaController;
-
+use App\Http\Controllers\bidController;
 
 
 
@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     ]);
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
-    Route::get('/items/bid/{item}', [ItemController::class, 'bid'])->name('items.bid');
+    Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
 
 
     Route::get('/verify-human/{item}', [CaptchaController::class, 'show'])->name('captcha.show');
