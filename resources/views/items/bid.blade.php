@@ -38,37 +38,59 @@
                 @foreach ($item->comments as $comment)
                     <li>{{ $comment->comment }}</li>
                 @endforeach --}}
-            <p><strong>Bid Right Now:</strong></p>
-            {{-- <form action="{{ route('item.update', $item->id) }}" method="POST"> --}}
-                @csrf
-                <input type="number" name="bid_amount" class="border rounded p-2" placeholder="Enter your bid">
-                <button type="button" class="bg-blue-500 text-white rounded p-2" onclick="document.getElementById('paymentModal').classList.remove('hidden')">Place Bid</button>
-            {{-- </form> --}}
-        </div>
-    
-        <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-            <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-                <div class="flex justify-between items-center border-b pb-2">
-                    <h5 class="text-lg font-semibold">Choose Payment Method</h5>
-                    <button class="text-gray-500" onclick="document.getElementById('paymentModal').classList.add('hidden')">&times;</button>
-                </div>
-                <div class="mt-4">
-                    <button class="bg-blue-500 text-white w-full py-2 rounded mb-2">Pay with PayPal</button>
-                    <hr class="my-4">
-                    <form>
-                        <div class="mb-3">
-                            <label class="block text-sm font-medium">Card Number</label>
-                            <input type="text" class="w-full p-2 border rounded mt-1" placeholder="1234 5678 9012 3456">
+                <form action="{{ route('items.update', $item->id) }}" method="POST">
+                    @csrf
+                    <input type="number" name="bid_amount" class="border rounded p-2" placeholder="Enter your bid">
+                    <button type="button" class="bg-blue-500 text-white rounded p-2" id="openModal">Place Bid</button>
+                </form>
+                
+                <!-- Tooltip -->
+                
+                
+                <!-- Payment Modal -->
+                <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <h5 class="text-lg font-semibold">Choose Payment Method</h5>
+                            <button class="text-gray-500" id="closeModal">&times;</button>
                         </div>
-                        <div class="flex space-x-2">
-                            <input type="text" class="w-1/2 p-2 border rounded" placeholder="MM/YY">
-                            <input type="text" class="w-1/2 p-2 border rounded" placeholder="CVV">
+                        <div class="mt-4">
+                            <button class="bg-blue-500 text-white w-full py-2 rounded mb-2">Pay with PayPal</button>
+                            <hr class="my-4">
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium">Card Number</label>
+                                    <input type="text" class="w-full p-2 border rounded mt-1" placeholder="1234 5678 9012 3456" disabled>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <input type="text" class="w-1/2 p-2 border rounded" placeholder="MM/YY" disabled>
+                                    <input type="text" class="w-1/2 p-2 border rounded" placeholder="CVV" disabled>
+                                    <div class="relative group">
+                                        <button class="bg-gray-200 p-2 rounded">?</button>
+                                        <span class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded">
+                                            this is a showcase project, no real payment is processed
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="bg-green-500 text-white w-full py-2 rounded mt-4" id="paybutton">Pay with Card</button>
+                            
                         </div>
-                        <button type="submit" class="bg-green-500 text-white w-full py-2 rounded mt-4">Pay with Card</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
+                
+                <!-- JavaScript for Modal -->
+                <script>
+                    document.getElementById('openModal').addEventListener('click', () => {
+                        document.getElementById('paymentModal').classList.remove('hidden');
+                    });
+                
+                    document.getElementById('closeModal').addEventListener('click', () => {
+                        document.getElementById('paymentModal').classList.add('hidden');
+                    });
+                    document.getElementById('paybutton').addEventListener('click', () => {
+                        document.getElementById('openModal').click();
+                    });
+                </script>
+                
 </div>
 
 <script>
