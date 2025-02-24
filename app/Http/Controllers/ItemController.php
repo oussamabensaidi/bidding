@@ -152,4 +152,6 @@ public function clientShow(Item $item)
 {
     return view('items.clientShow', compact('item'));
 }
+
+
 }

@@ -34,12 +34,10 @@
             <p><strong>Current price:</strong> ${{ $item->current_bid }}</p>
             <p><strong>People Live:</strong> {{ $item->people_live }}</p>
             <p><strong>Comments:</strong></p>
-            {{-- <ul>
-                @foreach ($item->comments as $comment)
-                    <li>{{ $comment->comment }}</li>
-                @endforeach --}}
-                <form action="{{ route('items.update', $item->id) }}" method="POST">
+            
+                <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm">
                     @csrf
+                    @method('PATCH')
                     <input type="number" name="bid_amount" class="border rounded p-2" placeholder="Enter your bid">
                     <button type="button" class="bg-blue-500 text-white rounded p-2" id="openModal">Place Bid</button>
                 </form>
@@ -87,7 +85,7 @@
                         document.getElementById('paymentModal').classList.add('hidden');
                     });
                     document.getElementById('paybutton').addEventListener('click', () => {
-                        document.getElementById('openModal').click();
+                        document.getElementById('bidForm').submit();
                     });
                 </script>
                 

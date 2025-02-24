@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
     Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
-
+    Route::patch('/items/bid/{item}', [bidController::class, 'updateBid'])->name('items.updateBid');
 
     Route::get('/verify-human/{item}', [CaptchaController::class, 'show'])->name('captcha.show');
     Route::post('/verify-human/{item}', [CaptchaController::class, 'verify'])->name('captcha.verify');
