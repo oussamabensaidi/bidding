@@ -6,17 +6,19 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Policies\ItemPolicy;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; //
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
+use App\Models\User;
 class ItemController extends Controller
 {
     use AuthorizesRequests;
     public function index()
     {
+        $userCount = User::where('role', 'client')->count();
         $items = Item::where('user_id', auth()->user()->id)->paginate(10);
         if (auth()->user()->role == 'client') {
             $items = Item::paginate(10);// Show all items to the clients 
         }
-        return view('items.index', compact('items'));
+        return view('items.index', compact('items', 'userCount'));
     }
 
     public function create()
