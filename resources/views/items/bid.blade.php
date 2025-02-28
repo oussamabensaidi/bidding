@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="container mx-auto p-4">
+<div class="container mx-auto p-4 dark:bg-gray-900 dark:text-white">
     <div class="relative max-w-2xl mx-auto">
         <!-- Image Container -->
         @php
@@ -14,14 +14,14 @@
 
         <!-- Navigation Buttons -->
         <button id="prev-btn" 
-                class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 m-4 transition-colors duration-200">
+                class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full p-2 m-4 transition-colors duration-200">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
         </button>
 
         <button id="next-btn" 
-                class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 m-4 transition-colors duration-200">
+                class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full p-2 m-4 transition-colors duration-200">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
@@ -38,32 +38,31 @@
                 <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm">
                     @csrf
                     @method('PATCH')
-                    <input type="number" name="bid_amount" class="border rounded p-2" placeholder="Enter your bid">
+                    <input type="number" name="bid_amount" class="border rounded p-2 dark:bg-gray-800 dark:border-gray-600" placeholder="Enter your bid">
                     <button type="button" class="bg-blue-500 text-white rounded p-2" id="openModal">Place Bid</button>
                 </form>
                 
                 <!-- Tooltip -->
                 
-                
                 <!-- Payment Modal -->
                 <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                    <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-                        <div class="flex justify-between items-center border-b pb-2">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-96">
+                        <div class="flex justify-between items-center border-b pb-2 dark:border-gray-600">
                             <h5 class="text-lg font-semibold">Choose Payment Method</h5>
-                            <button class="text-gray-500" id="closeModal">&times;</button>
+                            <button class="text-gray-500 dark:text-gray-400" id="closeModal">&times;</button>
                         </div>
                         <div class="mt-4">
                             <button class="bg-blue-500 text-white w-full py-2 rounded mb-2">Pay with PayPal</button>
-                            <hr class="my-4">
+                            <hr class="my-4 dark:border-gray-600">
                                 <div class="mb-3">
                                     <label class="block text-sm font-medium">Card Number</label>
-                                    <input type="text" class="w-full p-2 border rounded mt-1" placeholder="1234 5678 9012 3456" disabled>
+                                    <input type="text" class="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:border-gray-600" placeholder="1234 5678 9012 3456" disabled>
                                 </div>
                                 <div class="flex space-x-2">
-                                    <input type="text" class="w-1/2 p-2 border rounded" placeholder="MM/YY" disabled>
-                                    <input type="text" class="w-1/2 p-2 border rounded" placeholder="CVV" disabled>
+                                    <input type="text" class="w-1/2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="MM/YY" disabled>
+                                    <input type="text" class="w-1/2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="CVV" disabled>
                                     <div class="relative group">
-                                        <button class="bg-gray-200 p-2 rounded">?</button>
+                                        <button class="bg-gray-200 dark:bg-gray-700 p-2 rounded">?</button>
                                         <span class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded">
                                             this is a showcase project, no real payment is processed
                                         </span>
@@ -74,7 +73,19 @@
                         </div>
                     </div>
                 </div>
-                
+                <script>
+                    Echo.channel('bids')
+    .listen('.BidPlaced', (e) => {
+        console.log('New bid placed:', e.bidAmount, 'on item:', e.itemId);
+
+        // Update the bid list dynamically (without refreshing)
+        let bidList = document.getElementById('bid-list');
+        let newBid = document.createElement('li');
+        newBid.textContent = `New bid: ${e.bidAmount} on item ${e.itemId}`;
+        bidList.appendChild(newBid);
+    });
+
+                </script>
                 <!-- JavaScript for Modal -->
                 <script>
                     document.getElementById('openModal').addEventListener('click', () => {
