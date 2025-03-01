@@ -74,16 +74,23 @@
                     </div>
                 </div>
                 <script>
-                    Echo.channel('bids')
-    .listen('.BidPlaced', (e) => {
-        console.log('New bid placed:', e.bidAmount, 'on item:', e.itemId);
+                    // Ensure this is within a <script> tag or JS file after Echo is initialized
+document.addEventListener('DOMContentLoaded', function () {
+    const itemId = {{ $item->id }}; // Pass the item ID to your JS
 
-        // Update the bid list dynamically (without refreshing)
-        let bidList = document.getElementById('bid-list');
-        let newBid = document.createElement('li');
-        newBid.textContent = `New bid: ${e.bidAmount} on item ${e.itemId}`;
-        bidList.appendChild(newBid);
-    });
+    Echo.channel(`bids.${itemId}`) // Dynamic channel based on item ID
+        .listen('.BidPlaced', (e) => {
+            console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
+            // Update the bid list or UI elements here
+            const bidList = document.getElementById('bid-list');
+            const newBid = document.createElement('li');
+            newBid.textContent = `$${e.bidAmount}`;
+            bidList.appendChild(newBid);
+            
+            // Update current bid display
+            document.querySelector('[data-current-bid]').textContent = `$${e.bidAmount}`;
+        });
+});
 
                 </script>
                 <!-- JavaScript for Modal -->

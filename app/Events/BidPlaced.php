@@ -49,7 +49,7 @@ class BidPlaced implements ShouldBroadcast
 
     public function broadcastOn(): array
     {
-        return [new Channel('bids')]; // Channel name
+        return [new Channel('bids.' . $this->itemId)];
     }
 
     public function broadcastWith()
