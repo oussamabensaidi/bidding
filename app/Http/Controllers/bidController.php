@@ -7,16 +7,15 @@ use App\Models\Item;
 use App\Models\Bid;
 use Illuminate\Support\Facades\Auth;
 use App\Events\BidPlaced;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class bidController extends Controller
 {
-    public function bid(Item $item)
-{
+public function bid(Item $item){
     return view('items.bid', compact('item'));
 }
 
 
-public function updateBid(Request $request, Item $item)
-{
+public function updateBid(Request $request, Item $item){
     // $this->authorize('update', $item);
 
     $validated = $request->validate([
@@ -33,7 +32,7 @@ public function updateBid(Request $request, Item $item)
     ]);
 
     $item->update(['current_bid' => $validated['bid_amount']]);
-    broadcast(new BidPlaced($validated['bid_amount'], $item->id))->toOthers();
+    broadcast(new BidPlaced($validated['bid_amount'], $item->id));
 
 
 

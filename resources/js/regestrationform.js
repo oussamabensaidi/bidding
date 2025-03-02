@@ -158,7 +158,7 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
 });
 
-let file_input = document.getElementById('file');
+let file_input = document.getElementById('pfp');
   file_input.addEventListener('change', function() {
     let file = this.files[0];
     let reader = new FileReader();

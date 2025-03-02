@@ -30,7 +30,7 @@
         <!-- Auction Details -->
         <div class="mt-8">
             <h2 class="text-2xl font-bold">Auction Details</h2>
-            <p><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
+            <p><strong>Starting price:</strong> ${{ $item->starting_bid }} <span data-current-bid></span></p>
             <p><strong>Current price:</strong> ${{ $item->current_bid }}</p>
             <p><strong>People Live:</strong> {{ $item->people_live }}</p>
             <p><strong>Comments:</strong></p>
@@ -74,21 +74,13 @@
                     </div>
                 </div>
                 <script>
-                    // Ensure this is within a <script> tag or JS file after Echo is initialized
 document.addEventListener('DOMContentLoaded', function () {
-    const itemId = {{ $item->id }}; // Pass the item ID to your JS
+    const itemId = {{ $item->id }}; 
 
-    Echo.channel(`bids.${itemId}`) // Dynamic channel based on item ID
+    Echo.channel(`bids.${itemId}`)
         .listen('.BidPlaced', (e) => {
             console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
-            // Update the bid list or UI elements here
-            const bidList = document.getElementById('bid-list');
-            const newBid = document.createElement('li');
-            newBid.textContent = `$${e.bidAmount}`;
-            bidList.appendChild(newBid);
-            
-            // Update current bid display
-            document.querySelector('[data-current-bid]').textContent = `$${e.bidAmount}`;
+            alert('New bid placed!');
         });
 });
 

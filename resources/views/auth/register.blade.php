@@ -5,7 +5,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/regestrationform.js'])
+    @vite(['resources/css/app.css', 'resources/js/regestrationform.js'])
 </head>
 
 <div class="main-wrapper">
@@ -95,7 +95,7 @@
           <div class="form-step-2">
               <div>
                         <label for="file" class="form-label">Profile picture</label>
-                        <input type="file"  accept="image/*" id="file" class="form-input" name="profile_picture"  >
+                        <input type="file"  accept="image/*" id="pfp" class="form-input" name="profile_picture"  >
               </div>
               <div class="input-flex"> 
                   <div>
