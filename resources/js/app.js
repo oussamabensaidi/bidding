@@ -64,5 +64,5 @@ document.addEventListener('DOMContentLoaded', () => {
 //   document.getElementById('item_file').click();};
 //  i have used this function to call the file input but its exposed to the window object (window.choseAgain) and i dont want that so i used the event listener instead :)
   
-  fileInput.addEventListener('change', () => preview(fileInput));
+  // fileInput.addEventListener('change', () => preview(fileInput));
 });
