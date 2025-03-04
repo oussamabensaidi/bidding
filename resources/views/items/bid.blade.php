@@ -30,8 +30,8 @@
         <!-- Auction Details -->
         <div class="mt-8">
             <h2 class="text-2xl font-bold">Auction Details</h2>
-            <p><strong>Starting price:</strong> ${{ $item->starting_bid }} <span data-current-bid></span></p>
-            <p><strong>Current price:</strong> ${{ $item->current_bid }}</p>
+            <p><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
+            <p id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
             <p><strong>People Live:</strong> {{ $item->people_live }}</p>
             <p><strong>Comments:</strong></p>
             
@@ -72,21 +72,24 @@
                             
                         </div>
                     </div>
+                    <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
                 </div>
-                <script type="module">
-                    import Echo from 'laravel-echo';
-                    import Pusher from 'pusher-js';
-document.addEventListener('DOMContentLoaded', function () {
-    const itemId = {{ $item->id }}; 
-
-    Echo.channel(`bids.${itemId}`)
-        .listen('.BidPlaced', (e) => {
-            console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
-            alert('New bid placed!');
-        });
+                {{-- <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                            const itemId = {{ $item->id }};
+                            Echo.channel(`bids.${itemId}`)
+                                .listen('.BidPlaced', (e) => {
+                                    console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
+                                    alert('New bid placed!');
+                                    });
 });
 
-                </script>
+
+                </script> --}}
+
+
+
+
                 <!-- JavaScript for Modal -->
                 <script>
                     document.getElementById('openModal').addEventListener('click', () => {
