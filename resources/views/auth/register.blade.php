@@ -12,6 +12,16 @@
   <button class="dark-mode-toggle" id="themeToggle">
       🌓
   </button>
+  <div id="errorModal" class="error-modal">
+    <div class="error-content">
+      <div class="error-header">
+        <span class="error-icon">!</span>
+        <h3>Validation Error</h3>
+      </div>
+      <p id="errorMessage"></p>
+      <button id="modalConfirmBtn">OK</button>
+    </div>
+  </div>
     <div class="form-wrapper">
       <form action="{{route('register')}}" method="POST" enctype="multipart/form-data">
         @csrf
