@@ -134,7 +134,7 @@
         updateImage(currentIndex);
     });
 
-    // Optional: Add keyboard navigation
+    //  Add keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
             prevBtn.click();
@@ -142,6 +142,9 @@
             nextBtn.click();
         }
     });
+
+
+
 </script>
 
 <style>

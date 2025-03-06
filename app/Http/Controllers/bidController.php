@@ -25,18 +25,23 @@ public function updateBid(Request $request, Item $item){
     'min:' . (isset($item->current_bid) ? ($item->current_bid + 1) : ($item->starting_bid + 1)),
 ]
     ]);
+    $userId = Auth::id();
+
     Bid::create([
-        'user_id' => Auth::id(),
+        'user_id' => $userId,
         'item_id' => $item->id,
         'amount' => $validated['bid_amount'],
     ]);
 
+
+
     $item->update(['current_bid' => $validated['bid_amount']]);
-    broadcast(new BidPlaced($validated['bid_amount'], $item->id));
+
+        broadcast(new BidPlaced($validated['bid_amount'], $item->id, $userId));
+    
 
 
 
-    // return redirect()->route('items.bid', ['item' => $item])->with('success', 'Bid updated successfully.');
-    return response()->json(['message' => 'Bid placed successfully!']);
+        return redirect()->route('items.bid', ['item' => $item])->with('success', 'Bid updated successfully.');
 }
 }

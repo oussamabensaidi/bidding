@@ -14,9 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const item_id = document.getElementById('item_id').value;  
     window.Echo.channel(`bids.${item_id}`)
         .listen('BidPlaced', (e) => {
+            if (e.user_id !== currentUserId) {
             console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
             alert('New bid placed!');
             const bidAmountElement = document.getElementById('current-bid-amount');
             bidAmountElement.innerHTML = `<strong>Current price<strong/>: $${e.bidAmount}`;
+        }
         });
 });

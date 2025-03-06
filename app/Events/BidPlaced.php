@@ -10,41 +10,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-// class BidPlaced
-// {
-    // use Dispatchable, InteractsWithSockets, SerializesModels;
-
-//     /**
-//      * Create a new event instance.
-//      */
-//     public function __construct()
-//     {
-//         //
-//     }
-
-//     /**
-//      * Get the channels the event should broadcast on.
-//      *
-//      * @return array<int, \Illuminate\Broadcasting\Channel>
-//      */
-//     public function broadcastOn(): array
-//     {
-//         return [
-//             new Channel('bids'),
-//         ];
-//     }
-// }
 class BidPlaced implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $bidAmount;
     public $itemId;
+    public $userId;
 
-    public function __construct($bidAmount, $itemId)
+    public function __construct($bidAmount, $itemId , $userId)
     {
         $this->bidAmount = $bidAmount;
         $this->itemId = $itemId;
+        $this->userId = $userId;
     }
 
     public function broadcastOn(): array
@@ -57,6 +35,7 @@ class BidPlaced implements ShouldBroadcast
         return [
             'bidAmount' => $this->bidAmount,
             'itemId' => $this->itemId,
+            'userId' => $this->userId,
         ];
     }
 }
