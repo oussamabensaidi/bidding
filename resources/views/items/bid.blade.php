@@ -73,6 +73,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
+                    <input type="hidden" name="currentUserId" value="{{ $item->user->id }}" id="currentUserId">
                 </div>
                 {{-- <script>
                     document.addEventListener('DOMContentLoaded', function () {
