@@ -147,13 +147,10 @@ class ItemController extends Controller
         $item->item_pic = implode('|', $pictures);
         $item->save();
         // return dd($item, $pictures, $oldPictures, $itemName); this saved me a lot of headaches when debugging 😵
-
     return redirect()->route('items.edit', $item)->with('success', 'Image deleted successfully.');   
-    }
+}
 public function clientShow(Item $item)
 {
     return view('items.clientShow', compact('item'));
 }
-
-
 }

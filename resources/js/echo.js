@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentUserId = document.getElementById('currentUserId').value;  
     window.Echo.channel(`bids.${item_id}`)
         .listen('BidPlaced', (e) => {
-            if (parseInt(e.user_id) !== parseInt(currentUserId)) { 
+            if (parseInt(e.userId) !== parseInt(currentUserId)) { 
             console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
+            console.log("Connecting to channel: bids." + item_id);
             alert('New bid placed!');
             const bidAmountElement = document.getElementById('current-bid-amount');
             bidAmountElement.innerHTML = `<strong>Current price<strong/>: $${e.bidAmount}`;

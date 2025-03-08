@@ -24,12 +24,10 @@ class BidPlaced implements ShouldBroadcast
         $this->itemId = $itemId;
         $this->userId = $userId;
     }
-
     public function broadcastOn(): array
     {
         return [new Channel('bids.' . $this->itemId)];
     }
-
     public function broadcastWith()
     {
         return [

@@ -73,23 +73,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
-                    <input type="hidden" name="currentUserId" value="{{ $item->user->id }}" id="currentUserId">
+                    <input type="hidden" name="currentUserId" value="{{ Auth::id()}}" id="currentUserId">
                 </div>
-                {{-- <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                            const itemId = {{ $item->id }};
-                            Echo.channel(`bids.${itemId}`)
-                                .listen('.BidPlaced', (e) => {
-                                    console.log('New bid:', e.bidAmount, 'on item:', e.itemId);
-                                    alert('New bid placed!');
-                                    });
-});
-
-
-                </script> --}}
-
-
-
 
                 <!-- JavaScript for Modal -->
                 <script>
