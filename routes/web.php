@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\bidController;
-
-
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
     Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
     Route::patch('/items/bid/{item}', [bidController::class, 'updateBid'])->name('items.updateBid');
+    
+    Route::post('/comment', [CommentController::class, 'comment'])->name('comment');
 
     Route::get('/verify-human/{item}', [CaptchaController::class, 'show'])->name('captcha.show');
     Route::post('/verify-human/{item}', [CaptchaController::class, 'verify'])->name('captcha.verify');

@@ -33,13 +33,21 @@
             <p><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
             <p id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
             <p><strong>People Live:</strong> {{ $item->people_live }}</p>
-            <p><strong>Comments:</strong></p>
+            <p><strong>Comments:</strong>{{$item->comments->comment}}</p>
             
                 <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm">
                     @csrf
                     @method('PATCH')
                     <input type="number" name="bid_amount" class="border rounded p-2 dark:bg-gray-800 dark:border-gray-600" placeholder="Enter your bid">
                     <button type="button" class="bg-blue-500 text-white rounded p-2" id="openModal">Place Bid</button>
+                </form>
+                <form action="{{ route('comment')}}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                    <input type="text" name="comment" class="border rounded p-2 dark:bg-gray-800 dark:border-gray-600" placeholder="Enter your comment">
+                    <button type="submit" class="bg-blue-500 text-white rounded p-2">Comment</button>
                 </form>
                 
                 <!-- Tooltip -->
