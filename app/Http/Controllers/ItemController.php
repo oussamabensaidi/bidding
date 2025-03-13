@@ -15,7 +15,7 @@ class ItemController extends Controller
     {
         $userCount = User::where('role', 'client')->count();
         $items = Item::where('user_id', auth()->user()->id)->paginate(10);
-        if (auth()->user()->role == 'client') {
+        if (Auth::user()->role == 'client') {
             $items = Item::paginate(10);// Show all items to the clients 
         }
         return view('items.index', compact('items', 'userCount'));
@@ -47,7 +47,7 @@ class ItemController extends Controller
             }
         
             foreach ($files as $file) {
-                $fileName = auth()->id() . '_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $fileName = Auth::id() . '_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $filePath = $file->storeAs('items_pic', $fileName, 'public');
                 $fullName[] = $filePath;
             }
@@ -98,7 +98,7 @@ class ItemController extends Controller
         }
         foreach ($files as $file) {
             if ($file) {  // Skip null entries if any
-                $fileName = auth()->id() . '_' . now()->timestamp . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $fileName = Auth::id() . '_' . now()->timestamp . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $paths[] = $file->storeAs('items_pic', $fileName, 'public');
             }
         }

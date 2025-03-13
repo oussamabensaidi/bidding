@@ -33,7 +33,9 @@
             <p><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
             <p id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
             <p><strong>People Live:</strong> {{ $item->people_live }}</p>
-            <p><strong>Comments:</strong>{{$item->comments->comment}}</p>
+            @foreach($item->comments as $c)
+            <p>{{ $c->comment }}</p>
+        @endforeach
             
                 <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm">
                     @csrf
