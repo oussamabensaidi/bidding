@@ -37,20 +37,27 @@
                         <p class="text-lg"><strong>Live Participants:</strong> {{ $item->people_live }}</p>
                     </div>
                 </div>
-
+                <!-- Bid Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm" class="space-y-4">
+                        @csrf
+                        @method('PATCH')
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input type="number" name="bid_amount" 
+                                class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter bid amount" min="{{ $item->current_bid + 1 }}">
+                            <button type="button" 
+                                    class="bg-green-500 hover:bg-green-600 text-white rounded-lg px-8 py-3 transition-colors duration-200"
+                                    id="openModal">
+                                Place Bid
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 <!-- Comment Section -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                    <h3 class="text-xl font-semibold mb-4">Live Comments</h3>
-                    <div id="commentLive" class="comment-section space-y-4 h-64 overflow-y-auto p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        @foreach($item->comments as $c)
-                            <div class="bg-white dark:bg-gray-600 p-3 rounded-md shadow-sm">
-                                <p class="text-gray-800 dark:text-gray-200">{{ $c->comment }}</p>
-                                <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <form action="{{ route('comment')}}" method="POST" class="mt-4 flex gap-2">
+                <h3 class="text-xl font-semibold mb-4">Live Comments</h3>
+                <form action="{{ route('comment')}}" method="POST" class="mt-4 flex gap-2">
                         @csrf
                         <input type="hidden" name="item_id" value="{{ $item->id }}">
                         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
@@ -62,25 +69,19 @@
                             Send
                         </button>
                     </form>
+                    <div id="commentLive" class="comment-section space-y-4 h-64 overflow-y-auto p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        @foreach($item->comments as $c)
+                            <div class="bg-white dark:bg-gray-600 p-3 rounded-md shadow-sm">
+                                <p class="text-gray-800 dark:text-gray-200">{{ $c->comment }}</p>
+                                <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    
                 </div>
 
-                <!-- Bid Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                    <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm" class="space-y-4">
-                        @csrf
-                        @method('PATCH')
-                        <div class="flex flex-col md:flex-row gap-4">
-                            <input type="number" name="bid_amount" 
-                                   class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
-                                   placeholder="Enter bid amount" min="{{ $item->current_bid + 1 }}">
-                            <button type="button" 
-                                    class="bg-green-500 hover:bg-green-600 text-white rounded-lg px-8 py-3 transition-colors duration-200"
-                                    id="openModal">
-                                Place Bid
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                
             </div>
 
             <!-- Payment Modal -->

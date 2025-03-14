@@ -10,6 +10,8 @@ window.Echo = new Echo({
     forceTLS: false,
     disableStats: true,
 });
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const item_id = document.getElementById('item_id').value;  
     const currentUserId = document.getElementById('currentUserId').value;  
@@ -24,28 +26,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         });
 });
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const itemId = document.getElementById('item_id');
-    const currentUserId = document.getElementById('currentUserId');
-    
+    const   = document.getElementById('currentUserId');
     if (!itemId || !currentUserId) return; // Check if elements exist
-    
     const commentLive = document.getElementById('commentLive');
-    
     if (!commentLive) return; // Check if the container exists
-
     const item_id = itemId.value;
     const current_user_id = currentUserId.value;
-
     window.Echo.channel(`comment.${item_id}`)
         .listen('placeComment', (e) => {
             if (parseInt(e.userId) !== parseInt(current_user_id)) { 
                 console.log("Connecting to channel: comment");
-                // alert('New comment placed!');
-                
+                // alert('New comment placed!'); 
                 const node = document.createElement("p");
-                node.textContent = e.comment; // Safer than createTextNode
-                
+                node.textContent = e.comment;     
                 commentLive.appendChild(node);
             }
         });
