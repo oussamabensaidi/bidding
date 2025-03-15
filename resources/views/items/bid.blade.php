@@ -1,158 +1,189 @@
 <x-app-layout>
-<div class="container mx-auto p-4 dark:bg-gray-900 dark:text-white">
-    <div class="relative max-w-2xl mx-auto">
-        <!-- Image Container -->
-        @php
-            $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
-        @endphp 
-        <div class="relative">
-            <img id="current-image" 
-                 src="{{ Storage::url($pics[0]) }}" 
-                 alt="Gallery image" 
-                 class="w-full h-80 object-cover rounded-lg shadow-lg transition-opacity duration-300">
-        </div>
-
-        <!-- Navigation Buttons -->
-        <button id="prev-btn" 
-                class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full p-2 m-4 transition-colors duration-200">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </button>
-
-        <button id="next-btn" 
-                class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full p-2 m-4 transition-colors duration-200">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-        </button>
-        
-        <!-- Auction Details -->
-        <div class="mt-8">
-            <h2 class="text-2xl font-bold">Auction Details</h2>
-            <p><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
-            <p id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
-            <p><strong>People Live:</strong> {{ $item->people_live }}</p>
-            @foreach($item->comments as $c)
-            <p>{{ $c->comment }}</p>
-        @endforeach
-            
-                <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm">
-                    @csrf
-                    @method('PATCH')
-                    <input type="number" name="bid_amount" class="border rounded p-2 dark:bg-gray-800 dark:border-gray-600" placeholder="Enter your bid">
-                    <button type="button" class="bg-blue-500 text-white rounded p-2" id="openModal">Place Bid</button>
-                </form>
-                <form action="{{ route('comment')}}" method="POST">
-                    @csrf
-                    @method('POST')
-                    <input type="hidden" name="item_id" value="{{ $item->id }}">
-                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                    <input type="text" name="comment" class="border rounded p-2 dark:bg-gray-800 dark:border-gray-600" placeholder="Enter your comment">
-                    <button type="submit" class="bg-blue-500 text-white rounded p-2">Comment</button>
-                </form>
+    <div class="container mx-auto p-4 dark:bg-gray-900 dark:text-white">
+        <div class="relative max-w-4xl mx-auto">
+            <!-- Image Container -->
+            @php
+                $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+            @endphp 
+            <div class="relative group">
+                <img id="current-image" 
+                     src="{{ Storage::url($pics[0]) }}" 
+                     alt="Gallery image" 
+                     class="w-full h-96 object-cover rounded-lg shadow-lg transition-opacity duration-300 hover:shadow-xl">
                 
-                <!-- Tooltip -->
-                
-                <!-- Payment Modal -->
-                <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-96">
-                        <div class="flex justify-between items-center border-b pb-2 dark:border-gray-600">
-                            <h5 class="text-lg font-semibold">Choose Payment Method</h5>
-                            <button class="text-gray-500 dark:text-gray-400" id="closeModal">&times;</button>
-                        </div>
-                        <div class="mt-4">
-                            <button class="bg-blue-500 text-white w-full py-2 rounded mb-2">Pay with PayPal</button>
-                            <hr class="my-4 dark:border-gray-600">
-                                <div class="mb-3">
-                                    <label class="block text-sm font-medium">Card Number</label>
-                                    <input type="text" class="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:border-gray-600" placeholder="1234 5678 9012 3456" disabled>
-                                </div>
-                                <div class="flex space-x-2">
-                                    <input type="text" class="w-1/2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="MM/YY" disabled>
-                                    <input type="text" class="w-1/2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="CVV" disabled>
-                                    <div class="relative group">
-                                        <button class="bg-gray-200 dark:bg-gray-700 p-2 rounded">?</button>
-                                        <span class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded">
-                                            this is a showcase project, no real payment is processed
-                                        </span>
-                                    </div>
-                                </div>
-                                <button type="submit" class="bg-green-500 text-white w-full py-2 rounded mt-4" id="paybutton">Pay with Card</button>
-                            
-                        </div>
+                <!-- Navigation Buttons -->
+                <button id="prev-btn" 
+                        class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700/80 dark:hover:bg-gray-600/90 rounded-full p-3 m-4 transition-all duration-200 transform hover:scale-110">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+
+                <button id="next-btn" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700/80 dark:hover:bg-gray-600/90 rounded-full p-3 m-4 transition-all duration-200 transform hover:scale-110">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Auction Details -->
+            <div class="mt-8 space-y-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <h2 class="text-3xl font-bold mb-4 border-b pb-2 dark:border-gray-600">Auction Details</h2>
+                    <div class="space-y-3">
+                        <p class="text-lg"><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
+                        <p class="text-lg" id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
+                        <p class="text-lg"><strong>Live Participants:</strong> {{ $item->people_live }}</p>
                     </div>
-                    <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
-                    <input type="hidden" name="currentUserId" value="{{ Auth::id()}}" id="currentUserId">
                 </div>
 
-                <!-- JavaScript for Modal -->
-                <script>
-                    document.getElementById('openModal').addEventListener('click', () => {
-                        document.getElementById('paymentModal').classList.remove('hidden');
-                    });
-                
-                    document.getElementById('closeModal').addEventListener('click', () => {
-                        document.getElementById('paymentModal').classList.add('hidden');
-                    });
-                    document.getElementById('paybutton').addEventListener('click', () => {
-                        document.getElementById('bidForm').submit();
-                    });
-                </script>
-                
-</div>
+                <!-- Comment Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Live Comments</h3>
+                    <div id="commentLive" class="comment-section space-y-4 h-64 overflow-y-auto p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        @foreach($item->comments as $c)
+                            <div class="bg-white dark:bg-gray-600 p-3 rounded-md shadow-sm">
+                                <p class="text-gray-800 dark:text-gray-200">{{ $c->comment }}</p>
+                                <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
+                            </div>
+                        @endforeach
+                    </div>
 
-<script>
-    // Get elements from DOM
-    const currentImage = document.getElementById('current-image');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+                    <form action="{{ route('comment')}}" method="POST" class="mt-4 flex gap-2">
+                        @csrf
+                        <input type="hidden" name="item_id" value="{{ $item->id }}">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <input type="text" name="comment" 
+                               class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
+                               placeholder="Enter your comment...">
+                        <button type="submit" 
+                                class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-3 transition-colors duration-200">
+                            Send
+                        </button>
+                    </form>
+                </div>
 
-    // Image array - replace with your Laravel image paths
-    const images = @json($pics); // Pass images array from controller
-    let currentIndex = 0;
+                <!-- Bid Section -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+                    <form action="{{ route('items.updateBid', $item->id) }}" method="POST" id="bidForm" class="space-y-4">
+                        @csrf
+                        @method('PATCH')
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input type="number" name="bid_amount" 
+                                   class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Enter bid amount" min="{{ $item->current_bid + 1 }}">
+                            <button type="button" 
+                                    class="bg-green-500 hover:bg-green-600 text-white rounded-lg px-8 py-3 transition-colors duration-200"
+                                    id="openModal">
+                                Place Bid
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-    // Function to update image
-    function updateImage(index) {
-        currentImage.src = "{{ Storage::url('') }}" + images[index];
-        currentImage.alt = `Image ${index + 1}`;
-    }
+            <!-- Payment Modal -->
+            <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-96 transform transition-all">
+                    <div class="flex justify-between items-center pb-4 border-b dark:border-gray-600">
+                        <h5 class="text-xl font-semibold">Payment Method</h5>
+                        <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl">&times;</button>
+                    </div>
+                    <div class="mt-6 space-y-4">
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 2.5a3.5 3.5 0 0 0-3.45 4H6.5a3 3 0 0 0 0 6h2.05a3.5 3.5 0 0 0 6.9 0h3.55a1 1 0 0 0 0-2h-3.55a3.5 3.5 0 0 0-6.9 0H6.5a1 1 0 0 1 0-2h2.55a3.5 3.5 0 0 0 6.9 0h3.55a3 3 0 0 0 0-6h-2.55a3.5 3.5 0 0 0-3.45-3.5z"/></svg>
+                            PayPal
+                        </button>
+                        
+                        <div class="space-y-3">
+                            <div class="relative">
+                                <input type="text" 
+                                       class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600" 
+                                       placeholder="Card Number"
+                                       disabled>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <input type="text" 
+                                       class="p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600" 
+                                       placeholder="MM/YY"
+                                       disabled>
+                                <input type="text" 
+                                       class="p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600" 
+                                       placeholder="CVV"
+                                       disabled>
+                                <div class="relative group">
+                                    <button class="w-full h-full bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                        ?
+                                    </button>
+                                    <div class="absolute hidden group-hover:block bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-sm px-3 py-1 rounded-lg whitespace-nowrap">
+                                        Demo payment - no real processing
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" 
+                                    class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg transition-colors duration-200"
+                                    id="paybutton">
+                                Confirm Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // Previous button click handler
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage(currentIndex);
-    });
-
-    // Next button click handler
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage(currentIndex);
-    });
-
-    //  Add keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            prevBtn.click();
-        } else if (e.key === 'ArrowRight') {
-            nextBtn.click();
+    <!-- Scripts remain the same -->
+    <script>
+        document.getElementById('openModal').addEventListener('click', () => {
+            document.getElementById('paymentModal').classList.remove('hidden');
+        });
+    
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('paymentModal').classList.add('hidden');
+        });
+        document.getElementById('paybutton').addEventListener('click', () => {
+            document.getElementById('bidForm').submit();
+        });
+    </script>
+    <script>
+        // Get elements from DOM
+        const currentImage = document.getElementById('current-image');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+    
+        // Image array - replace with your Laravel image paths
+        const images = @json($pics); // Pass images array from controller
+        let currentIndex = 0;
+    
+        // Function to update image
+        function updateImage(index) {
+            currentImage.src = "{{ Storage::url('') }}" + images[index];
+            currentImage.alt = `Image ${index + 1}`;
         }
-    });
-
-
-
-</script>
-
-<style>
-    /* Optional custom CSS for fade animation */
-    #current-image {
-        opacity: 1;
-        transition: opacity 0.5s ease-in-out;
-    }
     
-    #current-image.fade {
-        opacity: 0;
-    }
-</style>
+        // Previous button click handler
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage(currentIndex);
+        });
     
+        // Next button click handler
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage(currentIndex);
+        });
+    
+        //  Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            } else if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            }
+        });
+    
+    
+    
+    </script>
 </x-app-layout>
