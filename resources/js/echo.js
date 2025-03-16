@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     const itemId = document.getElementById('item_id');
-    const   = document.getElementById('currentUserId');
+    const  currentUserId = document.getElementById('currentUserId');
     if (!itemId || !currentUserId) return; // Check if elements exist
     const commentLive = document.getElementById('commentLive');
     if (!commentLive) return; // Check if the container exists

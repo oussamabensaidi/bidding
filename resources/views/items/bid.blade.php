@@ -59,8 +59,9 @@
                 <h3 class="text-xl font-semibold mb-4">Live Comments</h3>
                 <form action="{{ route('comment')}}" method="POST" class="mt-4 flex gap-2">
                         @csrf
-                        <input type="hidden" name="item_id" value="{{ $item->id }}">
-                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
+                        <input type="hidden" name="currentUserId" value="{{ Auth::id()}}" id="currentUserId">
+                    
                         <input type="text" name="comment" 
                                class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
                                placeholder="Enter your comment...">
