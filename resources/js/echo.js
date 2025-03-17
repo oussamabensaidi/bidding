@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Connecting to channel: bids." + item_id);
             alert('New bid placed!');
             const bidAmountElement = document.getElementById('current-bid-amount');
-            bidAmountElement.innerHTML = `<strong>Current price<strong/>: $${e.bidAmount}`;
+            bidAmountElement.innerHTML = `<strong>New Price<strong/>: $${e.bidAmount}!!!`;
         }
         });
 });
@@ -43,8 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Connecting to channel: comment");
                 // alert('New comment placed!'); 
                 const node = document.createElement("p");
-                node.textContent = e.comment;     
+                // node.textContent = e.comment;     
+                node.innerHTML = `<div class="bg-white dark:bg-gray-600 p-3 rounded-md shadow-sm">
+    <p class="text-gray-800 dark:text-gray-200">${e.comment}</p>
+    <small class="text-gray-500 dark:text-gray-400 text-sm">Just Now</small>
+</div>`;
+  
                 commentLive.appendChild(node);
+                scrollToBottom(commentLive);
             }
         });
 });

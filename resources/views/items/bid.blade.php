@@ -1,16 +1,16 @@
 <x-app-layout>
     <div class="container mx-auto p-4 dark:bg-gray-900 dark:text-white">
-        <div class="relative max-w-4xl mx-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Image Container -->
             @php
                 $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
             @endphp 
-            <div class="relative group">
-                <img id="current-image" 
-                     src="{{ Storage::url($pics[0]) }}" 
-                     alt="Gallery image" 
-                     class="w-full h-96 object-cover rounded-lg shadow-lg transition-opacity duration-300 hover:shadow-xl">
-                
+            <div class="md:sticky md:top-4 h-fit">
+                <div class="relative group">
+                    <img id="current-image" 
+                         src="{{ Storage::url($pics[0]) }}"
+                         alt="Gallery image"
+                         class="w-full h-96 object-cover rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl dark:border dark:border-gray-700">
                 <!-- Navigation Buttons -->
                 <button id="prev-btn" 
                         class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 dark:bg-gray-700/80 dark:hover:bg-gray-600/90 rounded-full p-3 m-4 transition-all duration-200 transform hover:scale-110">
@@ -26,15 +26,26 @@
                     </svg>
                 </button>
             </div>
+            </div>
 
             <!-- Auction Details -->
-            <div class="mt-8 space-y-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
+            <div class="space-y-6">
+                <!-- Auction Details Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
                     <h2 class="text-3xl font-bold mb-4 border-b pb-2 dark:border-gray-600">Auction Details</h2>
-                    <div class="space-y-3">
-                        <p class="text-lg"><strong>Starting price:</strong> ${{ $item->starting_bid }}</p>
-                        <p class="text-lg" id="current-bid-amount"><strong>Current price:</strong> ${{ $item->current_bid }}</p>
-                        <p class="text-lg"><strong>Live Participants:</strong> {{ $item->people_live }}</p>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Starting price:</span>
+                            <span class="font-semibold">${{ $item->starting_bid }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Current price:</span>
+                            <span class="font-semibold text-green-600 dark:text-green-400" id="current-bid-amount">${{ $item->current_bid }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 dark:text-gray-300">Live Participants:</span>
+                            <span class="font-semibold">{{ $item->people_live }}</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Bid Section -->
@@ -55,32 +66,44 @@
                     </form>
                 </div>
                 <!-- Comment Section -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <h3 class="text-xl font-semibold mb-4">Live Comments</h3>
-                <form action="{{ route('comment')}}" method="POST" class="mt-4 flex gap-2">
-                        @csrf
-                        <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
-                        <input type="hidden" name="currentUserId" value="{{ Auth::id()}}" id="currentUserId">
+                 <!-- Comment Section Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                <div class="space-y-6">
+                    <h3 class="text-xl font-semibold">Live Comments</h3>
                     
-                        <input type="text" name="comment" 
-                               class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
-                               placeholder="Enter your comment...">
-                        <button type="submit" 
-                                class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-3 transition-colors duration-200">
-                            Send
-                        </button>
-                    </form>
-                    <div id="commentLive" class="comment-section space-y-4 h-64 overflow-y-auto p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <!-- Comments Container -->
+                    <div id="commentLive" class="space-y-4 h-64 overflow-y-auto pr-2">
                         @foreach($item->comments as $c)
-                            <div class="bg-white dark:bg-gray-600 p-3 rounded-md shadow-sm">
-                                <p class="text-gray-800 dark:text-gray-200">{{ $c->comment }}</p>
-                                <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
+                            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <div class="flex items-start gap-3">
+                                    <div class="flex-1">
+                                        <p class="text-gray-800 dark:text-gray-200 mb-1">{{ $c->comment }}</p>
+                                        <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
 
-                    
+                    <!-- Comment Input -->
+                    <form action="{{ route('comment')}}" method="POST" class="mt-4">
+                        @csrf
+                        <input type="hidden" name="item_id" value="{{ $item->id }}" id="item_id">
+                        <input type="hidden" name="currentUserId" value="{{ Auth::id()}}" id="currentUserId">
+                        
+                        <div class="flex gap-3">
+                            <input type="text" name="comment" 
+                                   class="flex-1 border rounded-lg p-3 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Write your comment...">
+                            <button type="submit" 
+                                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-3 transition-colors duration-200 shadow-sm">
+                                Send
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+    </div>
 
                 
             </div>
@@ -135,8 +158,20 @@
         </div>
     </div>
 
-    <!-- Scripts remain the same -->
     <script>
+        function scrollToBottom(element) {
+    element.scrollTop = element.scrollHeight;
+} document.addEventListener('DOMContentLoaded', function () {
+        const commentLive = document.getElementById('commentLive');
+        if (commentLive) {
+            setTimeout(() => {
+                commentLive.scrollTop = commentLive.scrollHeight;
+            }, 100); // Small delay to ensure rendering
+        }
+    });
+
+
+
         document.getElementById('openModal').addEventListener('click', () => {
             document.getElementById('paymentModal').classList.remove('hidden');
         });
