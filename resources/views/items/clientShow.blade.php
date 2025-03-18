@@ -12,7 +12,6 @@
                  alt="Gallery image" 
                  class="w-full h-96 object-cover rounded-lg shadow-lg transition-opacity duration-300">
         </div>
-
         <!-- Navigation Buttons -->
         <button id="prev-btn" 
                 class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 m-4 transition-colors duration-200">

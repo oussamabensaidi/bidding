@@ -56,9 +56,9 @@
     <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
          <a href="{{ route('captcha.show',$item) }}">Bed $$$</a>
     </button>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
+    {{-- <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
        <a href="{{route('items.clientShow',$item)}}">see item</a>
-    </button>
+    </button> --}}
 @endcan
             </div>
           </div>

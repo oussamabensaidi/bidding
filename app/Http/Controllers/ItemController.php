@@ -14,7 +14,7 @@ class ItemController extends Controller
     public function index()
     {
         $userCount = User::where('role', 'client')->count();
-        $items = Item::where('user_id', auth()->user()->id)->paginate(10);
+        $items = Item::where('user_id', Auth::id())->paginate(10);
         if (Auth::user()->role == 'client') {
             $items = Item::paginate(10);// Show all items to the clients 
         }
@@ -54,7 +54,7 @@ class ItemController extends Controller
         
             $validated['item_pic'] = implode("|", $fullName);
         }
-        $validated['user_id'] = auth()->user()->id;
+        $validated['user_id'] = Auth::id();
         $validated['current_bid'] = $validated['starting_bid'];
         $validated['status'] = 1;
         $validated['shipping_status'] = 'pending';

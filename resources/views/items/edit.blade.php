@@ -91,26 +91,94 @@
                 <!-- Existing Image -->
                
     
-                <!-- Image Upload -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">New Image (optional):</label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg">
-                        <div class="space-y-1 text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <div class="flex text-sm text-gray-600 dark:text-gray-400">
-                                <label class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                                    <span>Upload a file</span>
-                                    <input type="file" name="item_pic[]" class="sr-only" multiple>
-                                </label>
-                                <p class="pl-1">or drag and drop</p>
-                            </div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400"> up to 10MB</p>
-                        </div>
-                    </div>
-                </div>
-    
+               <!-- Image Upload -->
+<div id="image-input">
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">To Add New Images (optional):</label>
+    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg" id="drop-area">
+        <div class="space-y-1 text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="flex text-sm text-gray-600 dark:text-gray-400">
+                <label class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                    <span>Upload a file</span>
+                    <input type="file" name="item_pic[]" class="sr-only" multiple id="item_file">
+                </label>
+                <p class="pl-1">or drag and drop</p>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400"> up to 10MB</p>
+        </div>
+    </div>
+</div>
+<div id="image-preview">
+    <div class="preview-area"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const fileInput = document.getElementById('item_file');
+  const previewArea = document.querySelector('.preview-area');
+  const imageInput = document.getElementById('image-input');
+  const imagePreview = document.querySelector('#image-preview');
+  const dropArea = document.getElementById('drop-area');
+
+  const preview = (elem, output = '') => {
+    imageInput.style.display = "none";
+    imagePreview.style.display = "block";
+
+    Array.from(elem.files).forEach((file, index) => {
+      const blobUrl = window.URL.createObjectURL(file);
+      // Only add the button to the first image
+      if (index === 0) {
+        output += `<div class="relative inline">
+            <img src="${blobUrl}" class="preview-image">
+            <button type="button" class="change-pic-btn absolute top-0 right-0 bg-blue-600 dark:bg-blue-700 text-white dark:text-gray-800 rounded-md px-2 py-1 text-xs">
+              Click Here To Change the pictures
+            </button>
+          </div>`;
+      } else {
+        output += `<div class="inline">
+            <img src="${blobUrl}" class="preview-image">
+          </div>`;
+      }
+    });
+
+    previewArea.innerHTML = output;
+
+    // Add click handler to the button
+    const changePicBtn = document.querySelector('.change-pic-btn');
+    if (changePicBtn) {
+      changePicBtn.addEventListener('click', () => fileInput.click());
+    }
+  };
+
+  fileInput.addEventListener('change', () => preview(fileInput));
+
+  // Drag-and-drop functionality
+  dropArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropArea.classList.add('highlight'); // Optionally, style when dragging over
+  });
+
+  dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('highlight');
+  });
+
+  dropArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropArea.classList.remove('highlight');
+    handleFiles(e.dataTransfer.files);
+  });
+
+  dropArea.addEventListener('click', () => fileInput.click());
+
+  // Handle file drop or selection
+  function handleFiles(files) {
+    preview({ files });
+  }
+});
+</script>
+
                 <div class="mt-6">
                     <button type="submit" 
                         class="w-full bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
