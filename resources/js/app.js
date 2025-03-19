@@ -46,14 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const blobUrl = window.URL.createObjectURL(file);
       // Only add the button to the first image
       if (index === 0) {
-        output += `<div class="relative inline">
+        output += `<div class="relative inline-block">
+        <button type="button" class="change-pic-btn absolute top-1 left-1 bg-blue-600 dark:bg-blue-700 text-white dark:text-gray-800 rounded-md px-3 py-1 text-xs whitespace-nowrap">
+          Click Here To Change the Pictures
+        </button>
             <img src="${blobUrl}" class="preview-image">
-            <button type="button" class="change-pic-btn absolute top-0 right-0 bg-blue-600 dark:bg-blue-700 text-white dark:text-gray-800 rounded-md px-2 py-1 text-xs">
-              Click Here To Change the pictures
-            </button>
           </div>`;
       } else {
-        output += `<div class="inline">
+        output += `<div class="inline-block">
             <img src="${blobUrl}" class="preview-image">
           </div>`;
       }
