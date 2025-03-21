@@ -13,6 +13,7 @@ class Item extends Model
         'starting_bid',
         'current_bid',
         'end_time',
+        'start_time',
         'status',
         'shipping_status',
         'item_pic'

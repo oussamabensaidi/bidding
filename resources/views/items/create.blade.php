@@ -7,34 +7,51 @@
                 <!-- Name Field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
+                    <input type="text" name="name" value="{{ old('name') }}" 
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200"
                         placeholder="Enter item name">
                 </div>
-
+                @error('name')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
                 <!-- Description Field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
-                    <textarea name="description" required rows="4"
+                    <textarea name="description"  rows="4"
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200 resize-y"
                         placeholder="Enter item description">{{ old('description') }}</textarea>
                 </div>
-
+                @error('description')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
                 <!-- Starting Bid Field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Starting Bid</label>
-                    <input type="number" step="0.01" name="starting_bid" value="{{ old('starting_bid') }}" required
+                    <input type="number" step="0.01" name="starting_bid" value="{{ old('starting_bid') }}" 
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200"
                         placeholder="Enter starting bid">
                 </div>
-
+                @error('starting_bid')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
+                <!-- Start Time Field -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
+                    <input type="datetime-local" name="start_time" value="{{ old('start_time') }}" 
+                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                </div>
+                @error('start_time')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
                 <!-- End Time Field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                    <input type="datetime-local" name="end_time" value="{{ old('end_time') }}" required
-                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                    <input type="datetime-local" name="end_time" value="{{ old('end_time') }}" 
+                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
                 </div>
-
+                @error('end_time')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
                 <!-- Item Image Upload -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Item Image</label>
@@ -58,7 +75,12 @@
                     </div>
                     
                 </div>
-                
+                @error('item_pic.*')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
+                @error('item_pic')
+                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
+                @enderror
             </div>
                 
             <!-- Submit Button -->

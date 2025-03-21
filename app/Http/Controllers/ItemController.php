@@ -34,9 +34,10 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'starting_bid' => 'required|numeric|min:0',
-            'end_time' => 'required|date',
-            'item_pic' => 'nullable|array|max:6',
-            'item_pic.*' => 'nullable|image|mimes:jpeg,png,jpg,gif' // .* is used to validate each item in the array of item pics
+            'end_time' => 'nullable|date',
+            'start_time' => 'required|date',
+            'item_pic' => 'required|array|max:6',
+            'item_pic.*' => 'required|image|mimes:jpeg,png,jpg,gif' // .* is used to validate each item in the array of item pics
         ]);
          if ($request->hasFile('item_pic')) {
             $fullName = [];
@@ -58,25 +59,28 @@ class ItemController extends Controller
         $validated['current_bid'] = $validated['starting_bid'];
         $validated['status'] = 1;
         $validated['shipping_status'] = 'pending';
-
+        
+        if (!empty($validated['end_time']) && $validated['start_time'] > $validated['end_time']) {
+            return back()->withErrors(['start_time' => 'The start time must be before the end time.'])->withInput();
+        }
         Item::create($validated);
 
     return redirect()->route('items')->with('success', 'Item created successfully.');
     }
 
-    public function show(Item $item)
+public function show(Item $item)
     {
         $this->authorize('view', $item);
         return view('items.show', compact('item'));
     }
 
-    public function edit(Item $item)
+public function edit(Item $item)
     {
         $this->authorize('update', $item);
         return view('items.edit', compact('item'));
     }
 
-    public function update(Request $request, Item $item)
+public function update(Request $request, Item $item)
 {
     $this->authorize('update', $item);
 
@@ -115,7 +119,7 @@ class ItemController extends Controller
 
 
 
-    public function destroy(Item $item)
+public function destroy(Item $item)
     {
         $this->authorize('delete', $item);
         $pictures = explode('|', $item->item_pic);
@@ -131,7 +135,7 @@ class ItemController extends Controller
 
 
 
-    public function deleteImage(Item $item, Request $request)
+public function deleteImage(Item $item, Request $request)
     {
         $this->authorize('delete', $item);
         $request->validate(['item_name' => 'required|string']);
