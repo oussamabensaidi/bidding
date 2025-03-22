@@ -27,31 +27,41 @@
                 <!-- Starting Bid Field -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Starting Bid</label>
-                    <input type="number" step="0.01" name="starting_bid" value="{{ old('starting_bid') }}" 
+                    <input type="number" step="1" name="starting_bid" value="{{ old('starting_bid') }}" 
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200"
                         placeholder="Enter starting bid">
                 </div>
                 @error('starting_bid')
                     <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
                 @enderror
-                <!-- Start Time Field -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
-                    <input type="datetime-local" name="start_time" value="{{ old('start_time') }}" 
-                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                <!-- Time Field -->
+                <div class="flex flex-wrap gap-4">
+                    <!-- Start Time -->
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Time</label>
+                        <input type="datetime-local" name="start_time" id="start_time" value="{{ old('start_time') }}" placeholder="please chose start date and time"
+                        class="datetimepicker w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                        @error('start_time')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                
+                    <!-- End Time -->
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
+                        <input type="datetime-local" name="end_time" value="{{ old('end_time') }}"  placeholder="please chose end date and time"
+                        class="datetimepicker w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                        @error('end_time')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                 </div>
-                @error('start_time')
-                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
-                @enderror
-                <!-- End Time Field -->
+                <!-- Launch Now Field -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time</label>
-                    <input type="datetime-local" name="end_time" value="{{ old('end_time') }}" 
-                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200">
+                    <label for="" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">launch the item now now</label>
+                    <input type="checkbox" id="launchNow">
                 </div>
-                @error('end_time')
-                    <div class="alert alert-danger dark:text-gray-300">{{ $message }}</div>
-                @enderror
                 <!-- Item Image Upload -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Item Image</label>
@@ -89,8 +99,22 @@
                 Create Item
             </button>
         </form>
-        <script>
-            
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <script>
+                flatpickr(".datetimepicker", {
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i:S",
+                });
+                
+                document.getElementById('launchNow').addEventListener('change', function(){
+                    if(this.checked){
+                        document.querySelector('#start_time').disabled = true;
+                        document.querySelector('#start_time').placeholder = new Date().toISOString().slice(0, 16);
+                    }else{
+                        document.querySelector('#start_time').disabled = false;
+                    }
+                });
             </script>
     </div>
 </x-app-layout>

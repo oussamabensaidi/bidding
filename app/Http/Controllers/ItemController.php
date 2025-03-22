@@ -34,8 +34,8 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'starting_bid' => 'required|numeric|min:0',
-            'end_time' => 'nullable|date',
-            'start_time' => 'required|date',
+            'end_time' => 'nullable|date|after_or_equal:start_time',
+            'start_time' => 'nullable|date|after_or_equal:now',
             'item_pic' => 'required|array|max:6',
             'item_pic.*' => 'required|image|mimes:jpeg,png,jpg,gif' // .* is used to validate each item in the array of item pics
         ]);
@@ -59,10 +59,14 @@ class ItemController extends Controller
         $validated['current_bid'] = $validated['starting_bid'];
         $validated['status'] = 1;
         $validated['shipping_status'] = 'pending';
-        
+
+        if (empty($validated['start_time'])) {
+            $validated['start_time'] = now();
+        }
         if (!empty($validated['end_time']) && $validated['start_time'] > $validated['end_time']) {
             return back()->withErrors(['start_time' => 'The start time must be before the end time.'])->withInput();
         }
+        
         Item::create($validated);
 
     return redirect()->route('items')->with('success', 'Item created successfully.');
