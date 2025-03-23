@@ -12,7 +12,28 @@
             @endcan
         </div>
     </x-slot>
-    
+    <script>
+      function startCountdown(endTime, elementId) {
+        let countDownDate = new Date(endTime).getTime();
+        let x = setInterval(() => {
+          let now = new Date().getTime();
+          let distance = countDownDate - now;
+          
+          if (distance < 0) {
+            document.getElementById(elementId).innerHTML = "Bidding Started!";
+            clearInterval(x);
+            return;
+          }
+          
+          let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+          document.getElementById(elementId).innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+        }, 1000);
+      }
+
+  </script>
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             {{ session('success') }}
@@ -47,11 +68,18 @@
             <div class="p-4 text-center">
                 <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
+             
+                  <div id="timer-{{ $item->id }}"></div>
+                  <script>
+                      let bidStartTime{{ $item->id }} = "{{ $item->start_time }}";
+                      startCountdown(bidStartTime{{ $item->id }}, 'timer-{{ $item->id }}');
+                  </script>
               @can('create', App\Models\Item::class)
     <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
         <a href="{{route('items.show',$item)}}">
         View Details</a>
     </button>
+
 @else
     <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
          <a href="{{ route('captcha.show',$item) }}">Bed $$$</a>
@@ -59,6 +87,7 @@
     {{-- <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
        <a href="{{route('items.clientShow',$item)}}">see item</a>
     </button> --}}
+
 @endcan
             </div>
           </div>
@@ -68,4 +97,5 @@
         {{ $items->links() }}
     </div>
     
+  
 </x-app-layout>

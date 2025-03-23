@@ -70,3 +70,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   fileInput.addEventListener('change', () => preview(fileInput));
 });
+
