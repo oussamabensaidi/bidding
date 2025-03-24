@@ -13,25 +13,38 @@
         </div>
     </x-slot>
     <script>
-      function startCountdown(endTime, elementId) {
-        let countDownDate = new Date(endTime).getTime();
-        let x = setInterval(() => {
-          let now = new Date().getTime();
-          let distance = countDownDate - now;
-          
-          if (distance < 0) {
-            document.getElementById(elementId).innerHTML = "Bidding Started!";
+ function startCountdown(startTime, endTime, elementId) {
+    let countDownDate = new Date(startTime).getTime();
+    let endDate = new Date(endTime).getTime();
+    let timerElement = document.getElementById(elementId);
+
+    let x = setInterval(() => {
+        let now = new Date().getTime();
+
+        if (now >= endDate) {
+            timerElement.innerHTML = "Bidding Ended!";
+            timerElement.className = "bg-red-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
             clearInterval(x);
             return;
-          }
-          
-          let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          
-          document.getElementById(elementId).innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-        }, 1000);
-      }
+        }
+
+        if (now >= countDownDate) {
+            timerElement.innerHTML = "Bidding Started!";
+            timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
+            return;
+        }
+
+        let distance = countDownDate - now;
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        timerElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+        timerElement.className = "bg-yellow-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
+    }, 1000);
+}
+
+
 
   </script>
     @if(session('success'))
@@ -65,15 +78,17 @@
             </div>
       
             {{-- Content Section --}}
+            <div id="timer-{{ $item->id }}"></div>
+            <script>
+              let bidStartTime{{ $item->id }} = "{{ $item->start_time }}";
+              let bidEndTime{{ $item->id }} = "{{ $item->end_time }}";
+              startCountdown(bidStartTime{{ $item->id }}, bidEndTime{{ $item->id }}, 'timer-{{ $item->id }}');
+            </script>
+          
             <div class="p-4 text-center">
                 <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
              
-                  <div id="timer-{{ $item->id }}"></div>
-                  <script>
-                      let bidStartTime{{ $item->id }} = "{{ $item->start_time }}";
-                      startCountdown(bidStartTime{{ $item->id }}, 'timer-{{ $item->id }}');
-                  </script>
               @can('create', App\Models\Item::class)
     <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
         <a href="{{route('items.show',$item)}}">
