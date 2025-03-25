@@ -29,7 +29,10 @@
         }
 
         if (now >= countDownDate) {
-            timerElement.innerHTML = "Bidding Started!";
+            let timeLeft = Math.floor((endDate - now) / 1000);
+            let minutesLeft = Math.floor(timeLeft / 60);
+            let secondsLeft = timeLeft % 60;
+            timerElement.innerHTML = "Bidding Started! Time left: " + minutesLeft + "m " + secondsLeft + "s";
             timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
             return;
         }
