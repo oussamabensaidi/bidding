@@ -8,6 +8,7 @@ use App\Models\Bid;
 use Illuminate\Support\Facades\Auth;
 use App\Events\BidPlaced;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Carbon\Carbon;
 class bidController extends Controller
 {
 public function bid(Item $item){
@@ -17,7 +18,12 @@ public function bid(Item $item){
 
 public function updateBid(Request $request, Item $item){
     // $this->authorize('update', $item);
-
+    $startTime = Carbon::parse($item->start_time);
+    $endTime = Carbon::parse($item->end_time);
+    $now = now();
+    if ($now->lt($startTime) || $now->gt($endTime)) {
+        return redirect()->route('items.bid', ['item' => $item])->with('error', 'Bidding is not allowed at this time.');
+    }
     $validated = $request->validate([
         'bid_amount' => [
     'required',

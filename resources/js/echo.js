@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
+function scrollToBottom(element) {
+    element.scrollTop = element.scrollHeight;
+} 
 document.addEventListener('DOMContentLoaded', function () {
     const itemId = document.getElementById('item_id');
     const  currentUserId = document.getElementById('currentUserId');

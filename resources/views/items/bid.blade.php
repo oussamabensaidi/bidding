@@ -1,10 +1,13 @@
 <x-app-layout>
+    @vite(['resources/js/bidding.js'])
     <div class="container mx-auto p-4 dark:bg-gray-900 dark:text-white">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Image Container -->
             @php
                 $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
             @endphp 
+           
+       
             <div class="md:sticky md:top-4 h-fit">
                 <div class="relative group">
                     <img id="current-image" 
@@ -63,6 +66,9 @@
                                 Place Bid
                             </button>
                         </div>
+                        @if (session('error'))
+                            <div class="text-red-500 text-sm">{{ session('error') }}</div>
+                        @endif
                     </form>
                 </div>
                 <!-- Comment Section -->
@@ -157,32 +163,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function scrollToBottom(element) {
-    element.scrollTop = element.scrollHeight;
-} document.addEventListener('DOMContentLoaded', function () {
-        const commentLive = document.getElementById('commentLive');
-        if (commentLive) {
-            setTimeout(() => {
-                commentLive.scrollTop = commentLive.scrollHeight;
-            }, 100); // Small delay to ensure rendering
-        }
-    });
-
-
-
-        document.getElementById('openModal').addEventListener('click', () => {
-            document.getElementById('paymentModal').classList.remove('hidden');
-        });
-    
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('paymentModal').classList.add('hidden');
-        });
-        document.getElementById('paybutton').addEventListener('click', () => {
-            document.getElementById('bidForm').submit();
-        });
-    </script>
     <script>
         // Get elements from DOM
         const currentImage = document.getElementById('current-image');
@@ -219,8 +199,5 @@
                 nextBtn.click();
             }
         });
-    
-    
-    
     </script>
 </x-app-layout>
