@@ -83,6 +83,7 @@
                             <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg transition-all hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <div class="flex items-start gap-3">
                                     <div class="flex-1">
+                                        <p class="text-gray-800 dark:text-gray-200 mb-1 font-semibold">{{ $c->user->name }}</p>
                                         <p class="text-gray-800 dark:text-gray-200 mb-1">{{ $c->comment }}</p>
                                         <small class="text-gray-500 dark:text-gray-400 text-sm">{{ $c->created_at->diffForHumans() }}</small>
                                     </div>

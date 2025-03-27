@@ -13,39 +13,7 @@
         </div>
     </x-slot>
     <script>
- function startCountdown(startTime, endTime, elementId) {
-    let countDownDate = new Date(startTime).getTime();
-    let endDate = new Date(endTime).getTime();
-    let timerElement = document.getElementById(elementId);
 
-    let x = setInterval(() => {
-        let now = new Date().getTime();
-
-        if (now >= endDate) {
-            timerElement.innerHTML = "Bidding Ended!";
-            timerElement.className = "bg-red-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
-            clearInterval(x);
-            return;
-        }
-
-        if (now >= countDownDate) {
-            let timeLeft = Math.floor((endDate - now) / 1000);
-            let minutesLeft = Math.floor(timeLeft / 60);
-            let secondsLeft = timeLeft % 60;
-            timerElement.innerHTML = "Bidding Started! Time left: " + minutesLeft + "m " + secondsLeft + "s";
-            timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
-            return;
-        }
-
-        let distance = countDownDate - now;
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        timerElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-        timerElement.className = "bg-yellow-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
-    }, 1000);
-}
 
 
 
@@ -83,9 +51,14 @@
             {{-- Content Section --}}
             <div id="timer-{{ $item->id }}"></div>
             <script>
-              let bidStartTime{{ $item->id }} = "{{ $item->start_time }}";
-              let bidEndTime{{ $item->id }} = "{{ $item->end_time }}";
-              startCountdown(bidStartTime{{ $item->id }}, bidEndTime{{ $item->id }}, 'timer-{{ $item->id }}');
+              document.addEventListener('DOMContentLoaded', function() {
+                // Use Blade syntax to embed PHP variables into the JavaScript
+                let bidStartTime = "{{ $item->start_time }}";
+                let bidEndTime = "{{ $item->end_time }}";
+                
+                // Make sure the element ID is dynamically set as well
+                startCountdown(bidStartTime, bidEndTime, 'timer-{{ $item->id }}');
+              });
             </script>
           
             <div class="p-4 text-center">

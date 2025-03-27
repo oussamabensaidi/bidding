@@ -18,4 +18,6 @@ document.getElementById('closeModal').addEventListener('click', () => {
 document.getElementById('paybutton').addEventListener('click', () => {
     document.getElementById('bidForm').submit();
 });
-        
+
+
+
