@@ -77,6 +77,16 @@
                     @enderror
                 </div>
     
+                <!-- Start Time -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time:</label>
+                    <input type="datetime-local" name="start_time" 
+                    value="{{ old('start_time', \Carbon\Carbon::parse($item->start_time)->format('Y-m-d\TH:i')) }}"
+                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-600 dark:bg-gray-700 dark:text-white transition duration-200" required>
+                    @error('start_time')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
                 <!-- End Time -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Time:</label>

@@ -93,6 +93,7 @@ public function update(Request $request, Item $item)
         'description'  => 'required|string',
         'starting_bid' => 'required|numeric|min:0',
         'end_time'     => 'required|date',
+        'start_time' => 'nullable|date|after_or_equal:now',
         'item_pic'     => 'nullable|array|max:6',
         'item_pic.*'   => 'nullable|image|mimes:jpeg,png,jpg,gif'
     ]);
@@ -113,7 +114,12 @@ public function update(Request $request, Item $item)
         // Save file paths as a pipe-separated string
         $validated['item_pic'] = implode("|", $paths). '|' . $item->item_pic;
     }
-
+    if (empty($validated['start_time'])) {
+        $validated['start_time'] = now();
+    }
+    if (!empty($validated['end_time']) && $validated['start_time'] > $validated['end_time']) {
+        return back()->withErrors(['start_time' => 'The start time must be before the end time.'])->withInput();
+    }
     $item->update($validated);
 
     return redirect()->route('items')->with('success', 'Item updated successfully.');
