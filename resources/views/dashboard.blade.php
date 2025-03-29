@@ -4,14 +4,63 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 text-center">
+        <div class="bg-red-500 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">Ended Items</h5>
+            <p class="text-3xl font-bold mt-2" id="ended-count">0</p>
+        </div>
+        <div class="bg-gray-600 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">Not Started</h5>
+            <p class="text-3xl font-bold mt-2" id="not-started-count">0</p>
+        </div>
+        <div class="bg-green-500 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">Live Items</h5>
+            <p class="text-3xl font-bold mt-2" id="live-count">0</p>
         </div>
     </div>
+
+    <!-- Chart Section -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <canvas id="statusChart"></canvas>
+    </div>
+
+    <script>
+        // Dummy Data
+        const itemStatus = {
+            ended: 12,
+            notStarted: 8,
+            live: 15
+        };
+
+        // Update Cards
+        document.getElementById('ended-count').textContent = itemStatus.ended;
+        document.getElementById('not-started-count').textContent = itemStatus.notStarted;
+        document.getElementById('live-count').textContent = itemStatus.live;
+
+        // Chart.js Configuration
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Ended', 'Not Started', 'Live'],
+                datasets: [{
+                    label: 'Item Count',
+                    data: [itemStatus.ended, itemStatus.notStarted, itemStatus.live],
+                    backgroundColor: ['#ef4444', '#4b5563', '#22c55e'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </x-app-layout>
