@@ -5,27 +5,31 @@
         </h2>
     </x-slot>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 text-center">
-        <div class="bg-red-500 text-white p-6 rounded-lg shadow-lg">
-            <h5 class="text-xl font-semibold">Ended Items</h5>
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8 text-center mt-6">
+        <div class="bg-gray-500 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">All Items</h5>
             <p class="text-3xl font-bold mt-2" id="ended-count">0</p>
-        </div>
-        <div class="bg-gray-600 text-white p-6 rounded-lg shadow-lg">
-            <h5 class="text-xl font-semibold">Not Started</h5>
-            <p class="text-3xl font-bold mt-2" id="not-started-count">0</p>
         </div>
         <div class="bg-green-500 text-white p-6 rounded-lg shadow-lg">
             <h5 class="text-xl font-semibold">Live Items</h5>
             <p class="text-3xl font-bold mt-2" id="live-count">0</p>
         </div>
+        <div class="bg-blue-600 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">Not Started</h5>
+            <p class="text-3xl font-bold mt-2" id="not-started-count">0</p>
+        </div>
+        <div class="bg-red-500 text-white p-6 rounded-lg shadow-lg">
+            <h5 class="text-xl font-semibold">Ended Items</h5>
+            <p class="text-3xl font-bold mt-2" id="ended-count">0</p>
+        </div>
     </div>
 
     <!-- Chart Section -->
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <canvas id="statusChart"></canvas>
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
+        <canvas id="statusChart" class="w-120 h-120"></canvas>
     </div>
+    
 
     <script>
         // Dummy Data
