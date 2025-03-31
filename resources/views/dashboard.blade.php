@@ -9,7 +9,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8 text-center mt-6">
         <div class="bg-gray-500 text-white p-6 rounded-lg shadow-lg">
             <h5 class="text-xl font-semibold">All Items</h5>
-            <p class="text-3xl font-bold mt-2" id="ended-count">0</p>
+            <p class="text-3xl font-bold mt-2" id="">{{$items_count}}</p>
         </div>
         <div class="bg-green-500 text-white p-6 rounded-lg shadow-lg">
             <h5 class="text-xl font-semibold">Live Items</h5>

@@ -18,6 +18,7 @@ class ItemController extends Controller
         if (Auth::user()->role == 'client') {
             $items = Item::paginate(10);// Show all items to the clients 
         }
+        
         return view('items.index', compact('items', 'userCount'));
     }
 
