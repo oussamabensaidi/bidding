@@ -24,9 +24,9 @@ class ItemPolicy
         return true;
     }
 
-    public function create(User $user)
+    public function isAdmin(User $user)
     {
-        return $user->role == 'admin'; // Only admin can create items
+        return $user->role == 'admin'; // Only admin can accsess this
     }
 
 

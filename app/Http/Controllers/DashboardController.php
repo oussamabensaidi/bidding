@@ -11,8 +11,23 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function dashboard()
-    {
-        $items_count = Item::where('user_id', Auth::id())->count();
-        return view('dashboard', compact('items_count'));
-    }
+{
+    $userId = Auth::id();
+
+    $items_count = Item::where('user_id', $userId)->count();
+    $live_count = Item::where('user_id', $userId)
+                      ->where('start_time', '<=', now())
+                      ->where('end_time', '>', now())
+                      ->count();
+
+    $not_started_count = Item::where('user_id', $userId)
+                             ->where('start_time', '>', now())
+                             ->count();
+
+    $ended_count = Item::where('user_id', $userId)
+                       ->where('end_time', '<=', now())
+                       ->count();
+
+    return view('dashboard', compact('items_count', 'live_count', 'not_started_count', 'ended_count'));
+}
 }

@@ -24,7 +24,7 @@ class ItemController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Item::class); // Check if the user is authorized to create an item
+        $this->authorize('isAdmin', Item::class); // Check if the user is authorized to create an item
         return view('items.create');
     }
 

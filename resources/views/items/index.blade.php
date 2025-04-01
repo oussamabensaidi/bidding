@@ -5,7 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('All Items') }}
             </h2>
-            @can('create', App\Models\Item::class)
+            @can('isAdmin', App\Models\Item::class)
             <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Total Users: {{ $userCount }}
             </h3>
@@ -30,10 +30,11 @@ startCountdown = function (startTime, endTime, elementId) {
         
         if (now >= countDownDate) {
           let timeLeft = Math.floor((endDate - now) / 1000);
-          let minutesLeft = Math.floor(timeLeft / 60);
+          let hoursLeft = Math.floor(timeLeft / 3600);
+          let minutesLeft = Math.floor((timeLeft % 3600) / 60);
           let secondsLeft = timeLeft % 60;
-          timerElement.innerHTML = "Bidding Started! Time left: " + minutesLeft + "m " + secondsLeft + "s";
-          timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
+          timerElement.innerHTML = "Bidding Started! Time left: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
+          timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
           return;
         }
         
@@ -42,8 +43,8 @@ startCountdown = function (startTime, endTime, elementId) {
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
-        timerElement.innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-        timerElement.className = "bg-yellow-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
+        timerElement.innerHTML =" Pre Publish: " + hours + "h " + minutes + "m " + seconds + "s ";
+        timerElement.className = "bg-yellow-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center ";
       }, 1000);
     }
 </script>
@@ -52,7 +53,7 @@ startCountdown = function (startTime, endTime, elementId) {
             {{ session('success') }}
         </div>
     @endif
-    @can('create', App\Models\Item::class)
+    @can('isAdmin', App\Models\Item::class)
         <a href="{{ route('items.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-4 inline-block">
             Create New Item
         </a>
@@ -94,7 +95,7 @@ startCountdown = function (startTime, endTime, elementId) {
                 <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
              
-              @can('create', App\Models\Item::class)
+              @can('isAdmin', App\Models\Item::class)
     <button class="bg-green-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
         <a href="{{route('items.show',$item)}}">
         View Details</a>
