@@ -20,16 +20,24 @@
 
             <!-- Page Heading -->
             @isset($header)
-                <header  class="bg-white shadow-lg shadow-purple-100 dark:bg-gray-800 dark:shadow-lg dark:shadow-purple-900">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="bg-white shadow-lg shadow-purple-100 dark:bg-gray-800 dark:shadow-lg dark:shadow-purple-900">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                        <div>
                             {{ $header }}
+                        </div>
+                        <div>
+                            <form method="GET" action="{{ route('items') }}" class="flex items-center">
+                                <input type="text" name="search" placeholder="Search items..." class="border px-4 py-2 rounded">
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded ml-2">Search</button>
+                            </form>
+                        </div>
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                {{ $slot }} 
             </main>
         </div>
     </body>

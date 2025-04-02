@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-8 text-center mt-6">

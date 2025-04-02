@@ -11,16 +11,28 @@ use App\Models\User;
 class ItemController extends Controller
 {
     use AuthorizesRequests;
-    public function index()
+    public function index(Request $request)
     {
         $userCount = User::where('role', 'client')->count();
-        $items = Item::where('user_id', Auth::id())->paginate(10);
-        if (Auth::user()->role == 'client') {
-            $items = Item::paginate(10);// Show all items to the clients 
+        $query = Item::query();
+        $searchPerformed = false; // Flag for search indication
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%");
+            $searchPerformed = true; // Set flag to true when search is performed
         }
-        
-        return view('items.index', compact('items', 'userCount'));
+    
+        if (Auth::user()->role !== 'client') {
+            $query->where('user_id', Auth::id());
+        }
+    
+        $items = $query->paginate(10);
+        $search = $request->input('search');
+        return view('items.index', compact('items', 'userCount', 'searchPerformed', 'search'));
     }
+    
+    
 
     public function create()
     {

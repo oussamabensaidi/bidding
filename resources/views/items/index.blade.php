@@ -1,17 +1,45 @@
 <x-app-layout>
 <div class="container mx-auto px-4">
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('All Items') }}
-            </h2>
-            @can('isAdmin', App\Models\Item::class)
-            <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Total Users: {{ $userCount }}
-            </h3>
-            @endcan
-        </div>
-    </x-slot>
+  <x-slot name="header">
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        {{ __('All Items') }}
+    </h2>
+</x-slot>
+
+<div class="container mx-auto px-4">
+    @isset($searchPerformed)
+        @if($searchPerformed)
+            <div class="bg-blue-100 text-blue-700 px-4 py-3 rounded mb-4">
+                <p>Search results for: <strong>{{ $search }}</strong></p>
+            </div>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                  // Get the search term from the blade template
+                  const searchTerm = "{{ $search ?? '' }}".trim().toLowerCase();
+          
+                  if (searchTerm) {
+                      // Find all elements with text content
+                      const elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div');
+          
+                      elements.forEach(element => {
+                          let elementContent = element.innerHTML.toLowerCase();
+          
+                          // Check if the search term is found in the element's text
+                          if (elementContent.includes(searchTerm)) {
+                              // Highlight the matching content
+                              let highlightedContent = element.innerHTML.replace(
+                                  new RegExp(searchTerm, 'li'),
+                                  match => `<span class="bg-yellow-100">${match}</span>`
+                              );
+                              element.innerHTML = highlightedContent;
+                          }
+                      });
+                  }
+              });
+          </script>
+        @endif
+    @endisset
+</div>
     <script>
 startCountdown = function (startTime, endTime, elementId) {
   let countDownDate = new Date(startTime).getTime();
@@ -33,7 +61,7 @@ startCountdown = function (startTime, endTime, elementId) {
           let hoursLeft = Math.floor(timeLeft / 3600);
           let minutesLeft = Math.floor((timeLeft % 3600) / 60);
           let secondsLeft = timeLeft % 60;
-          timerElement.innerHTML = "Bidding Started! Time left: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
+          timerElement.innerHTML = "Bidding Started! End after: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
           timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
           return;
         }
