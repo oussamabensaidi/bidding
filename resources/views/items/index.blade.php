@@ -61,7 +61,7 @@ startCountdown = function (startTime, endTime, elementId) {
           let hoursLeft = Math.floor(timeLeft / 3600);
           let minutesLeft = Math.floor((timeLeft % 3600) / 60);
           let secondsLeft = timeLeft % 60;
-          timerElement.innerHTML = "Bidding Started! End after: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
+          timerElement.innerHTML = "Bidding Started: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
           timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
           return;
         }
@@ -128,10 +128,13 @@ startCountdown = function (startTime, endTime, elementId) {
         <a href="{{route('items.show',$item)}}">
         View Details</a>
     </button>
-    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+    
+      <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
         <a href="{{route('items.edit',$item)}}">
        Edit</a>
-    </button>
+    </button>  
+  
+    
 
 @else
     <button class="bg-green-500 text-white px-4 py-2 rounded-md ">

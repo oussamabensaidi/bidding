@@ -26,7 +26,9 @@ class ItemController extends Controller
         if (Auth::user()->role !== 'client') {
             $query->where('user_id', Auth::id());
         }
-    
+
+
+
         $items = $query->paginate(10);
         $search = $request->input('search');
         return view('items.index', compact('items', 'userCount', 'searchPerformed', 'search'));
@@ -179,5 +181,11 @@ public function deleteImage(Item $item, Request $request)
 public function clientShow(Item $item)
 {
     return view('items.clientShow', compact('item'));
+}
+public function track(){
+$now = now();
+    $items = Item::where('end_time','<=',$now)->get();
+
+    return view('items.track',compact('items'));
 }
 }
