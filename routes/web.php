@@ -29,8 +29,7 @@ Route::middleware('auth')->group(function () {
         'update' => 'items.update',
         'destroy' => 'items.destroy',
     ]);
-    Route::get('/items/track', [ItemController::class, 'track'])->name('items.track');
-
+    
     
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
@@ -42,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/verify-human/{item}', [CaptchaController::class, 'show'])->name('captcha.show');
     Route::post('/verify-human/{item}', [CaptchaController::class, 'verify'])->name('captcha.verify');
     
+    Route::get('/trackItems', [ItemController::class,'trackItems'])->name('trackItems');
 });
 
 

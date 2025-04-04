@@ -182,10 +182,15 @@ public function clientShow(Item $item)
 {
     return view('items.clientShow', compact('item'));
 }
-public function track(){
-$now = now();
-    $items = Item::where('end_time','<=',$now)->get();
 
-    return view('items.track',compact('items'));
+public function trackItems(){
+    $this->authorize('isAdmin', Item::class);
+    $now = now();
+    $items = Item::where('end_time','<=',$now)->get();
+    // return dd('gg');
+    return view('items.trackItems',compact('items'));
 }
+
+
+
 }
