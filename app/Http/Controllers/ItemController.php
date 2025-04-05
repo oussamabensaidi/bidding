@@ -187,7 +187,6 @@ public function trackItems(){
     $this->authorize('isAdmin', Item::class);
     $now = now();
     $items = Item::where('end_time','<=',$now)->get();
-    // return dd('gg');
     return view('items.trackItems',compact('items'));
 }
 

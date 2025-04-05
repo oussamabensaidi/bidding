@@ -27,12 +27,12 @@
                         {{ __('create items') }}
                     </x-nav-link>
                 </div>
-                @endcan
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('trackItems')" :active="request()->routeIs('trackItems')" class="text-purple-400 hover:text-purple-600 focus:text-purple-600">
                         {{ __('Track Items') }}
                     </x-nav-link>
                 </div>
+                @endcan
             </div>
            
             <!-- Settings Dropdown -->
