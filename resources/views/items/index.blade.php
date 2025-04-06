@@ -124,15 +124,20 @@ startCountdown = function (startTime, endTime, elementId) {
               <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
              
               @can('isAdmin', App\Models\Item::class)
-    <button class="bg-green-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-        <a href="{{route('items.show',$item)}}">
-        View Details</a>
-    </button>
-    
+    <div class="flex justify-center space-x-2 mt-2">
+      <form action="{{ route('items.destroy', ['item' => $item->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        @csrf
+        @method('DELETE')
+        <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors" type="submit">Delete</button>
+      </form>
       <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-        <a href="{{route('items.edit',$item)}}">
-       Edit</a>
-    </button>  
+        <a href="{{route('items.edit',$item)}}">Edit</a>
+      </button>
+      <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
+        <a href="{{route('items.show',$item)}}">View Details</a>
+      </button>
+    </div>
+  
   
     
 

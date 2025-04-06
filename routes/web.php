@@ -27,10 +27,11 @@ Route::middleware('auth')->group(function () {
         'show' => 'items.show',
         'edit' => 'items.edit',
         'update' => 'items.update',
-        'destroy' => 'items.destroy',
+        // 'destroy' => 'items.destroy',
     ]);
     
     
+    Route::delete('/items/{item}/destroy', [ItemController::class, 'destroy'])->name('items.destroy');
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
     Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
