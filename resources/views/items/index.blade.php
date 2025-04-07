@@ -25,14 +25,14 @@
                           let elementContent = element.innerHTML.toLowerCase();
           
                           // Check if the search term is found in the element's text
-                          if (elementContent.includes(searchTerm)) {
-                              // Highlight the matching content
+                            if (elementContent.includes(searchTerm)) {
+                              // Highlight the matching content with more noticeable styling
                               let highlightedContent = element.innerHTML.replace(
-                                  new RegExp(searchTerm, 'li'),
-                                  match => `<span class="bg-yellow-100">${match}</span>`
+                                new RegExp(searchTerm, 'gi'),
+                                match => `<span class="bg-yellow-300 text-black font-bold px-1 rounded">${match}</span>`
                               );
                               element.innerHTML = highlightedContent;
-                          }
+                            }
                       });
                   }
               });
@@ -99,6 +99,7 @@ startCountdown = function (startTime, endTime, elementId) {
                 <img 
                   src="{{ Storage::url($pics[0]) }}"
                   alt="{{ $item->name }}"
+
                   class="w-38 h-full object-cover"
                 >
               @else
