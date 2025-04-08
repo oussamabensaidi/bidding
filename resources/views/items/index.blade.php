@@ -98,8 +98,6 @@ startCountdown = function (startTime, endTime, elementId) {
               @if (!empty($pics))
                 <img 
                   src="{{ Storage::url($pics[0]) }}"
-                  alt="{{ $item->name }}"
-
                   class="w-38 h-full object-cover"
                 >
               @else
