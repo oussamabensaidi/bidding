@@ -53,8 +53,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-8">
                 @foreach ($items as $item)
                 @php
-                        $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
-                        @endphp
+                $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+                @endphp
                     
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 group">
                                 
@@ -78,8 +78,8 @@
                     </div>
 
                     <!-- Timer -->
-                    <div id="timer-{{ $item->id }}" class="mx-4 mt-4"></div>
-
+                    {{-- <div id="timer-{{ $item->id }}" class="mx-4 mt-4"></div> --}}
+                    <div id="timer-{{ $item->id }}" class="mx-4 mt-4 text-sm font-medium text-center rounded-lg p-2 transition-all"></div>
                     <!-- Content Section -->
                     <div class="p-5">
                         <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-gray-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
@@ -121,6 +121,13 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        let bidStartTime = "{{ $item->start_time }}";
+                        let bidEndTime = "{{ $item->end_time }}";
+                        startCountdown(bidStartTime, bidEndTime, 'timer-{{ $item->id }}');
+                    });
+                </script>
             @endforeach
         </div>
 
@@ -129,6 +136,42 @@
             {{ $items->links() }}
         </div>
     </div>
-
+    <script>
+        // Preserve the original countdown function
+        startCountdown = function (startTime, endTime, elementId) {
+            let countDownDate = new Date(startTime).getTime();
+            let endDate = new Date(endTime).getTime();
+            let timerElement = document.getElementById(elementId);
+            
+            let x = setInterval(() => {
+                let now = new Date().getTime();
+                
+                if (now >= endDate) {
+                    timerElement.innerHTML = "Bidding Ended";
+                    timerElement.className = "mx-4 mt-4 text-sm font-medium text-center rounded-lg p-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200";
+                    clearInterval(x);
+                    return;
+                }
+                
+                if (now >= countDownDate) {
+                    let timeLeft = Math.floor((endDate - now) / 1000);
+                    let hoursLeft = Math.floor(timeLeft / 3600);
+                    let minutesLeft = Math.floor((timeLeft % 3600) / 60);
+                    let secondsLeft = timeLeft % 60;
+                    timerElement.innerHTML = `Live: ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+                    timerElement.className = "mx-4 mt-4 text-sm font-medium text-center rounded-lg p-2 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 animate-pulse";
+                    return;
+                }
+                
+                let distance = countDownDate - now;
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                timerElement.innerHTML = `Starts in: ${hours}h ${minutes}m ${seconds}s`;
+                timerElement.className = "mx-4 mt-4 text-sm font-medium text-center rounded-lg p-2 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-200";
+            }, 1000);
+        }
+        </script>
     <!-- Timer Script remains unchanged -->
 </x-app-layout>
