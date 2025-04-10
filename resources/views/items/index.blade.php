@@ -137,9 +137,6 @@ startCountdown = function (startTime, endTime, elementId) {
         <a href="{{route('items.show',$item)}}">View Details</a>
       </button>
     </div>
-  
-  
-    
 
 @else
     <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
