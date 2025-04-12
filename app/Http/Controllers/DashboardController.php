@@ -27,7 +27,10 @@ class DashboardController extends Controller
     $ended_count = Item::where('user_id', $userId)
                        ->where('end_time', '<=', now())
                        ->count();
-
-    return view('dashboard', compact('items_count', 'live_count', 'not_started_count', 'ended_count'));
+    $featuredItems = Item::where('user_id', $userId)
+    ->latest()  // Sort by the most recent
+    ->take(3)   // Limit to 3 items
+    ->get();
+    return view('dashboard', compact('items_count', 'live_count', 'not_started_count', 'ended_count','featuredItems'));
 }
 }
