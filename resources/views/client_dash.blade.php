@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Seller Dashboard') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -77,7 +77,7 @@
                     @forelse($featuredItems as $item)
                         <div class="border rounded-lg p-4 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             @if($item->item_pic)
-                            <img src="{{ asset('storage/' . $item->item_pic) }}" alt="{{ $item->name }}" class="w-full h-48 object-cover rounded mb-4">
+                            <img src="{{ Storage::url($item->item_pic)  }}" alt="{{ $item->name }}" class="w-full h-48 object-cover rounded mb-4">
                             @endif
                             <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">{{ $item->name }}</h4>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
@@ -103,6 +103,9 @@
                                 <span class="text-gray-500 dark:text-gray-400">
                                     {{ $item->starting_bid ? number_format($item->starting_bid, 2) . ' USD' : 'No bids' }}
                                 </span>
+                                <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
+                                    <a href="{{ route('captcha.show',$item) }}">Bed $$$</a>
+                                </button>
                             </div>
                         </div>
                     @empty
