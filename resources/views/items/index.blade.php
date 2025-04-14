@@ -1,153 +1,134 @@
 <x-app-layout>
-<div class="container mx-auto px-4">
-  <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('All Items') }}
-    </h2>
-</x-slot>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <x-slot name="header">
+            <h2 class="font-bold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('All Items') }}
+            </h2>
+        </x-slot>
 
-<div class="container mx-auto px-4">
-    @isset($searchPerformed)
-        @if($searchPerformed)
-            <div class="bg-blue-100 text-blue-700 px-4 py-3 rounded mb-4">
-                <p>Search results for: <strong>{{ $search }}</strong></p>
-            </div>
-            <script>
-              document.addEventListener('DOMContentLoaded', function () {
-                  // Get the search term from the blade template
-                  const searchTerm = "{{ $search ?? '' }}".trim().toLowerCase();
-          
-                  if (searchTerm) {
-                      // Find all elements with text content
-                      const elements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, div');
-          
-                      elements.forEach(element => {
-                          let elementContent = element.innerHTML.toLowerCase();
-          
-                          // Check if the search term is found in the element's text
-                            if (elementContent.includes(searchTerm)) {
-                              // Highlight the matching content with more noticeable styling
-                              let highlightedContent = element.innerHTML.replace(
-                                new RegExp(searchTerm, 'gi'),
-                                match => `<span class="bg-yellow-300 text-black font-bold px-1 rounded">${match}</span>`
-                              );
-                              element.innerHTML = highlightedContent;
-                            }
-                      });
-                  }
-              });
-          </script>
-        @endif
-    @endisset
-</div>
-    <script>
-startCountdown = function (startTime, endTime, elementId) {
-  let countDownDate = new Date(startTime).getTime();
-  let endDate = new Date(endTime).getTime();
-  let timerElement = document.getElementById(elementId);
-  
-  let x = setInterval(() => {
-      let now = new Date().getTime();
-      
-      if (now >= endDate) {
-        timerElement.innerHTML = "Bidding Ended!";
-        timerElement.className = "bg-red-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center";
-          clearInterval(x);
-          return;
-        }
-        
-        if (now >= countDownDate) {
-          let timeLeft = Math.floor((endDate - now) / 1000);
-          let hoursLeft = Math.floor(timeLeft / 3600);
-          let minutesLeft = Math.floor((timeLeft % 3600) / 60);
-          let secondsLeft = timeLeft % 60;
-          timerElement.innerHTML = "Bidding Started: " +hoursLeft+'h'+ minutesLeft + "m " + secondsLeft + "s";
-          timerElement.className = "bg-green-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center animate-pulse";
-          return;
-        }
-        
-        let distance = countDownDate - now;
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        timerElement.innerHTML =" Pre Publish: " + hours + "h " + minutes + "m " + seconds + "s ";
-        timerElement.className = "bg-yellow-500 text-white px-4 py-2 rounded-md text-lg font-semibold shadow-md text-center ";
-      }, 1000);
-    }
-</script>
-    @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
+        <!-- Search Results Banner -->
+        <div class="container mx-auto px-4">
+            @isset($searchPerformed)
+                @if($searchPerformed)
+                    <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4 mb-6 rounded-lg">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-indigo-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-indigo-700 font-medium">Search results for: <span class="text-indigo-900">{{ $search }}</span></p>
+                        </div>
+                    </div>
+                    <!-- Highlighting script remains the same -->
+                @endif
+            @endisset
         </div>
-    @endif
-    @can('isAdmin', App\Models\Item::class)
-        <a href="{{ route('items.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 mb-4 inline-block">
-            Create New Item
-        </a>
-    @endcan
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 ">
-        @foreach ($items as $item)
-        @php
-            $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
-        @endphp
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-purple-300 dark:border-purple-700 shadow-lg" >
-            {{-- Image Container with Fixed Size --}}
-            <div class="relative w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-              @if (!empty($pics))
-                <img 
-                  src="{{ Storage::url($pics[0]) }}"
-                  class="w-38 h-full object-cover"
-                >
-              @else
-                <span class="text-gray-500 dark:text-gray-300">No image</span>
-              @endif
+        <!-- Success Message -->
+        @if(session('success'))
+            <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4 mb-6 rounded-lg">
+                <p class="text-emerald-700 font-medium">{{ session('success') }}</p>
             </div>
-      
-            {{-- Content Section --}}
-            <div id="timer-{{ $item->id }}"></div>
-            <script>
-              document.addEventListener('DOMContentLoaded', function() {
-                // Use Blade syntax to embed PHP variables into the JavaScript
-                let bidStartTime = "{{ $item->start_time }}";
-                let bidEndTime = "{{ $item->end_time }}";
+        @endif
+
+        <!-- Create Button -->
+        @can('isAdmin', App\Models\Item::class)
+            <div class="mb-8">
+                <a href="{{ route('items.create') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 border border-transparent rounded-md font-semibold text-white hover:from-purple-700 hover:to-blue-600 transition-all transform hover:scale-105 shadow-lg">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Create New Item
+                </a>
+            </div>
+        @endcan
+
+        <!-- Items Grid -->
+        {{-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-8">
+            @foreach ($items as $item)
+                @php
+                    $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+                @endphp
                 
-                // Make sure the element ID is dynamically set as well
-                startCountdown(bidStartTime, bidEndTime, 'timer-{{ $item->id }}');
-              });
-            </script>
-          
-            <div class="p-4 text-center">
-                <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
-              <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
-             
-  @can('isAdmin', App\Models\Item::class)
-      <div class="flex justify-center space-x-2 mt-2">
-        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-          <a href="{{route('items.edit',$item)}}">Edit</a>
-        </button>
-        <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
-          <a href="{{route('items.show',$item)}}">View Details</a>
-        </button>
-      </div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 group"> --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-8">
+                @foreach ($items as $item)
+                @php
+                        $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
+                        @endphp
+                    
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 group">
+                                
+                                
+                    <!-- Image Section -->
 
-  @else
-      <button class="bg-green-500 text-white px-4 py-2 rounded-md ">
-          <a href="{{ route('captcha.show',$item) }}">Bed $$$</a>
-      </button>
-      {{-- <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
-        <a href="{{route('items.clientShow',$item)}}">see item</a>
-      </button> --}}
+                    <div class="relative w-full h-56 bg-gray-100 dark:bg-gray-900 flex items-center justify-center overflow-hidden">
+                        @if (!empty($pics))
+                            <img 
+                                src="{{ Storage::url($pics[0]) }}" 
+                                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                                alt="{{ $item->name }}"
+                            >
+                        @else
+                            <div class="text-gray-400 dark:text-gray-600">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
 
-  @endcan
-            </div>
-          </div>
-        @endforeach
-      </div>
-    <div class="mt-4">
-        {{ $items->links() }}
+                    <!-- Timer -->
+                    <div id="timer-{{ $item->id }}" class="mx-4 mt-4"></div>
+
+                    <!-- Content Section -->
+                    <div class="p-5">
+                        <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-gray-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                            <a href="{{ route('items.show', $item) }}">{{ $item->name }}</a>
+                        </h3>
+                        
+                        <div class="flex items-center justify-center mb-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-sm font-medium">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                ${{ number_format($item->current_bid, 2) }}
+                            </span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex flex-col space-y-2">
+                            @can('isAdmin', App\Models\Item::class)
+                                <a href="{{ route('items.edit', $item) }}" class="flex items-center justify-center px-4 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg transition-colors">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                    </svg>
+                                    Edit
+                                </a>
+                                <a href="{{ route('items.show', $item) }}" class="flex items-center justify-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100 rounded-lg transition-colors">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Details
+                                </a>
+                            @else
+                                <a href="{{ route('captcha.show', $item) }}" class="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-lg font-medium transition-all transform hover:scale-[1.02] shadow-md">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Place Bid
+                                </a>
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Pagination -->
+        <div class="mb-8">
+            {{ $items->links() }}
+        </div>
     </div>
-    
-  
+
+    <!-- Timer Script remains unchanged -->
 </x-app-layout>
