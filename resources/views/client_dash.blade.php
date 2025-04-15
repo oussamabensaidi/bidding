@@ -133,6 +133,11 @@
                 const ctx = document.getElementById('statusChart').getContext('2d');
                 const darkMode = document.documentElement.classList.contains('dark');
                 
+                const chartColors = {
+                    live: darkMode ? '#10B981' : '#6EE7B7',
+                    upcoming: darkMode ? '#F59E0B' : '#FCD34D',
+                    ended: darkMode ? '#EF4444' : '#FCA5A5'
+                };
                 new Chart(ctx, {
                     type: 'bar',
                     data: {

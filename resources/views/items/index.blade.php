@@ -145,7 +145,6 @@
             
             let x = setInterval(() => {
                 let now = new Date().getTime();
-                
                 if (now >= endDate) {
                     timerElement.innerHTML = "Bidding Ended";
                     timerElement.className = "mx-4 mt-4 text-sm font-medium text-center rounded-lg p-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200";
