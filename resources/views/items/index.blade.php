@@ -63,11 +63,12 @@
 
                     <div class="relative w-full h-56 bg-gray-100 dark:bg-gray-900 flex items-center justify-center overflow-hidden">
                         @if (!empty($pics))
+                        <a href="{{ route('items.clientShow', $item) }}">
                             <img 
                                 src="{{ Storage::url($pics[0]) }}" 
                                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                                 alt="{{ $item->name }}"
-                            >
+                            ></a>
                         @else
                             <div class="text-gray-400 dark:text-gray-600">
                                 <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +84,7 @@
                     <!-- Content Section -->
                     <div class="p-5">
                         <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-gray-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                            <a href="{{ route('items.show', $item) }}">{{ $item->name }}</a>
+                            <a href="{{ route('items.clientShow', $item) }}">{{ $item->name }}</a>
                         </h3>
                         
                         <div class="flex items-center justify-center mb-4">
