@@ -65,7 +65,7 @@
                         @if (!empty($pics))
                         <a href="{{ route('items.clientShow', $item) }}">
                             <img 
-                                src="{{ Storage::url($pics[0]) }}" 
+                                src="{{ asset('storage/'.$pics[0]) }}" 
                                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                                 alt="{{ $item->name }}"
                             ></a>
