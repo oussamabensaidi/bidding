@@ -142,7 +142,8 @@
 
             function updateImage(change) {
                 currentIndex = (currentIndex + change + images.length) % images.length;
-                currentImage.src = "{{ Storage::url('') }}" + images[currentImage];
+                currentImage.src = "{{ Storage::url('') }}" + images[currentIndex];
+
                 
                 // Update thumbnail borders
                 thumbnails.forEach((thumb, index) => {
