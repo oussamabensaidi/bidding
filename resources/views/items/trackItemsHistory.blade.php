@@ -85,20 +85,25 @@
                         @foreach($bids as $bid)
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">Bid by {{ $bid->user->name }}</span>
-                                <span class="text-gray-900 dark:text-gray-200">${{ number_format($bid->amount, 2) }}</span>
+                                <span class="text-green-900 dark:text-green-800">${{ number_format($bid->amount, 2) }}</span>
+                                <span class="text-gray-900 dark:text-gray-200">{{$bid->created_at}}</span>
+                              </div>
+                              @endforeach
+                              
                             </div>
-                        @endforeach
+                            
+                            <!-- Shipping Info -->
+                            
+                            <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                              @foreach($comments as $Comment)
+                              <div class="flex justify-between items-center mb-2">
+                                <span class="text-gray-500 dark:text-gray-400">Comment by {{ $Comment->user->name }}</span>
+                                <span class="text-gray-900 dark:text-gray-200 underline">{{ $Comment->comment }}</span>
+                                <span class="text-gray-900 dark:text-gray-200">{{$Comment->created_at}}</span>
+                      </div>
+                       @endforeach
                     </div>
-
-                    <!-- Shipping Info -->
-                    @if($item->shipping_status)
-                    <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <h2 class="text-xl font-semibold mb-3">Shipping Information</h2>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            {{ ucwords(str_replace('_', ' ', $item->shipping_status)) }}
-                        </p>
-                    </div>
-                    @endif
+                    
                 </div>
             </div>
         </div>
