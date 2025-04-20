@@ -76,10 +76,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     @forelse($featuredItems as $item)
                         <div class="border rounded-lg p-4 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            @if($item->item_pic)
+                            @if($item->item_pic && file_exists(public_path('storage/' . $item->item_pic)))
 
-                            <img src="{{ asset('storage/'.$item->item_pic)  }}" alt="{{ $item->name }}" class="w-full h-48 object-cover rounded mb-4">
+                            <img src="{{ asset('storage/'.$item->item_pic) }}" alt="{{ $item->name }}" class="w-full h-48 object-cover rounded mb-4">
                             @endif
+
                             <h4 class="font-medium text-gray-800 dark:text-gray-200 mb-2">{{ $item->name }}</h4>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
                                 {{ $item->description }}
