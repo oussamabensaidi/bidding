@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required'],
             'role' => ['required', 'string', 'in:client,admin'],
-            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif'],
             'balance' => ['nullable', 'numeric', 'min:0'], 
             'maximumbid' => ['nullable', 'numeric', 'min:0'], 
         ]);

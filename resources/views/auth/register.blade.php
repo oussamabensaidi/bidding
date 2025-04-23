@@ -98,7 +98,13 @@
                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 <x-input-error :messages="$errors->get('role')" class="mt-2" />
-            
+                  @if ($errors->any())
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li class="text-danger">{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              @endif
             </div>
           </div>
   
