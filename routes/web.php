@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/verify-human/{item}', [CaptchaController::class, 'verify'])->name('captcha.verify');
     
     Route::get('/trackItems', [ItemController::class,'trackItems'])->name('trackItems');
+    Route::get('/trackItems/history/{item}', [ItemController::class,'trackItemsHistory'])->name('trackItemsHistory');
     
 });
 

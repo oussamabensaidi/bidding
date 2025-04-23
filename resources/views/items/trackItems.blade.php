@@ -37,7 +37,7 @@
         @can('isAdmin', App\Models\Item::class)
 <div class="flex justify-center space-x-2 mt-2">
   <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-    <a href="{{route('items.edit',$item)}}">See History</a>
+    <a href="{{route('trackItemsHistory',$item)}}">See History</a>
   </button>
   <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
     <a href="{{route('items.show',$item)}}">Update Deleviry</a>

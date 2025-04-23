@@ -189,7 +189,10 @@ public function trackItems(){
     $items = Item::where('end_time','<=',$now)->get()->where('user_id', Auth::id());
     return view('items.trackItems',compact('items'));
 }
-
-
+public function trackItemsHistory(Item $item){
+    $this->authorize('isAdmin', Item::class);
+    // $items = Item::where('end_time','<=',$now)->get()->where('user_id', Auth::id());
+    return view('items.trackItemsHistory',compact('item'));
+}
 
 }
