@@ -31,32 +31,19 @@
         </script>
       
         <div class="p-4 text-center">
-            <p class="text-gray-600 dark:text-gray-300 mb-2">${{ number_format($item->current_bid, 2) }}</p>
+            <p class="text-gray-500 dark:text-gray-300 mb-2"><span class="text-red-600">${{ number_format($item->current_bid, 2) }}</span> => <span class="text-green-600">${{number_format($item->starting_bid, 2)}}</span></p>
           <h3 class="font-medium mb-2 line-clamp-2 text-gray-900 dark:text-gray-100">{{ $item->name }}</h3>
          
         @can('isAdmin', App\Models\Item::class)
 <div class="flex justify-center space-x-2 mt-2">
   <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-    <a href="{{route('items.edit',$item)}}">Edit</a>
+    <a href="{{route('items.edit',$item)}}">See History</a>
   </button>
   <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
-    <a href="{{route('items.show',$item)}}">View Details</a>
+    <a href="{{route('items.show',$item)}}">Update Deleviry</a>
   </button>
-  <form action="{{ route('items.destroy', ['item' => $item->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    @csrf
-    @method('DELETE')
-    <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors" type="submit">Delete</button>
-  </form>
 </div>
-
 @else
-<button class="bg-green-500 text-white px-4 py-2 rounded-md ">
-     <a href="{{ route('captcha.show',$item) }}">Bed $$$</a>
-</button>
-{{-- <button class="bg-blue-500 text-white px-4 py-2 rounded-md ">
-   <a href="{{route('items.clientShow',$item)}}">see item</a>
-</button> --}}
-
 @endcan
         </div>
       </div>
