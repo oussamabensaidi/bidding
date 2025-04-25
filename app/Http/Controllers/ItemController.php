@@ -186,7 +186,7 @@ public function clientShow(Item $item)
 public function trackItems(){
     $this->authorize('isAdmin', Item::class);
     $now = now();
-    $items = Item::where('end_time','<=',$now)->get();
+    $items = Item::where('end_time','<=',$now)->get()->where('user_id', Auth::id());
     return view('items.trackItems',compact('items'));
 }
 
