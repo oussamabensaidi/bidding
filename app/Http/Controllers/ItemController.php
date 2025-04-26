@@ -8,6 +8,7 @@ use App\Policies\ItemPolicy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
 use App\Models\User;
+use App\Models\Bid;
 class ItemController extends Controller
 {
     use AuthorizesRequests;
@@ -191,8 +192,9 @@ public function trackItems(){
 }
 public function trackItemsHistory(Item $item){
     $this->authorize('isAdmin', Item::class);
-    // $items = Item::where('end_time','<=',$now)->get()->where('user_id', Auth::id());
-    return view('items.trackItemsHistory',compact('item'));
+    $bids = Bid::all()->where('item_id', $item->id);
+
+    return view('items.trackItemsHistory',compact('item','bids'));
 }
 
 }
