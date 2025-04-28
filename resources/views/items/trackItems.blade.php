@@ -40,7 +40,7 @@
     <a href="{{route('trackItemsHistory',$item)}}">See History</a>
   </button>
   <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition-colors">
-    <a href="{{route('items.show',$item)}}">Update Deleviry</a>
+    <a href="{{route('trackItemsUpdateState',$item)}}">Update Deleviry</a>
   </button>
 </div>
 @else

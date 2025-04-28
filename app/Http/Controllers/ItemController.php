@@ -198,5 +198,12 @@ public function trackItemsHistory(Item $item){
 
     return view('items.trackItemsHistory',compact('item','bids','comments'));
 }
+public function trackItemsUpdateState(Item $item){
+    $this->authorize('isAdmin', Item::class);
+    $bids = Bid::all()->where('item_id', $item->id);
+    $comments = Comment::all()->where('item_id', $item->id);
+
+    return view('items.trackItemsUpdateState',compact('item','bids','comments'));
+}
 
 }
