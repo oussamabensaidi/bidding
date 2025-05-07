@@ -31,21 +31,20 @@
         <!-- Status Selector -->
 
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <form action="">
+            <form action="" method="POST">
             <h2 class="text-xl font-semibold mb-4">Update Shipment Status</h2>
             <select id="statusSelect" class="w-full p-2 border rounded-lg" >
-                <option value="pending">Pending</option>
-                <option value="processing">Processing</option>
-                <option value="shipped">Shipped</option>
-                <option value="in_transit">In Transit</option>
-                <option value="delivered">Delivered</option>
+                <option value="Select" selected disabled>Select the current situation :</option>
+                <option value="Pending">Pending</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
             </select>
             <script>
                 document.getElementById('statusSelect').addEventListener('change', function (e) {
                   const confirmed = confirm('Are you sure you want to update the status?');
                   if (!confirmed) {
                     // Undo the selection change by resetting it
-                    this.value = this.getAttribute('data-previous') || 'pending';
+                    this.value = this.getAttribute('data-previous') || 'Pending';
                   } else {
                     this.setAttribute('data-previous', this.value); // Save current selection
                   }
@@ -54,7 +53,7 @@
         </form>
         </div>
     </div>
-
+<input type="hidden" name="" value="{{$item->shipping_status}}" id="status_value">
     <script>
         // Chart initialization
         let progressChart;
@@ -91,11 +90,9 @@
         function updateStatus(status) {
             const statusDiv = document.getElementById('currentStatus');
             const statusMap = {
-                pending: { text: 'Pending', color: 'bg-gray-500', progress: 0 },
-                processing: { text: 'Processing', color: 'bg-blue-500', progress: 25 },
-                shipped: { text: 'Shipped', color: 'bg-yellow-500', progress: 50 },
-                in_transit: { text: 'In Transit', color: 'bg-orange-500', progress: 75 },
-                delivered: { text: 'Delivered', color: 'bg-green-500', progress: 100 }
+                Pending: { text: 'Pending', color: 'bg-gray-500', progress: 0 },
+                Shipped: { text: 'Shipped', color: 'bg-yellow-500', progress: 50 },
+                Delivered: { text: 'Delivered', color: 'bg-green-500', progress: 100 }
             };
 
             const { text, color, progress } = statusMap[status];
@@ -106,7 +103,7 @@
         }
 
         // Initial status
-        let currentStatus = 'pending';
+        let currentStatus = document.getElementById('status_value').value ; 
         updateStatus(currentStatus);
 
         // Event listener for select

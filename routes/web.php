@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/trackItems', [ItemController::class,'trackItems'])->name('trackItems');
     Route::get('/trackItems/history/{item}', [ItemController::class,'trackItemsHistory'])->name('trackItemsHistory');
     Route::get('/trackItems/update/{item}', [ItemController::class,'trackItemsUpdateState'])->name('trackItemsUpdateState');
+    Route::put('trackItemsUpdateState/{item}', [ItemController::class,'trackItemsUpdateStateForm'])->name('trackItemsUpdateStateForm');
     
 });
 

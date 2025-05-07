@@ -205,5 +205,12 @@ public function trackItemsUpdateState(Item $item){
 
     return view('items.trackItemsUpdateState',compact('item','bids','comments'));
 }
+public function trackItemsUpdateStateForm(Request $request, Item $item){
+    $this->authorize('isAdmin', Item::class);
+    $validated = $request->validate([
+        'shipping_status' => 'required|in:pending,shipped,delivered'
+    ]);
+    $item->update($validated);
+    return redirect()->route('trackItems')->with('success', 'Item updated successfully.');}
 
 }
