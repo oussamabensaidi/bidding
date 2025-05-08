@@ -34,6 +34,26 @@ $featuredItems = Item::where('user_id', Auth::id())
                      ->take(3)
                      ->get();
 
+if (Auth::check() && Auth::user()->role == 'client') {
+    $items_count = Item::all()->count();
+    $live_count = Item::all()
+                  ->where('start_time', '<=', $now)
+                  ->where('end_time', '>', $now)
+                  ->count();
+
+$not_started_count = Item::all()
+                         ->where('start_time', '>', $now)
+                         ->count();
+
+$ended_count = Item::all()
+                   ->where('end_time', '<=', $now)
+                   ->count();
+
+$featuredItems = Item::latest()
+                     ->take(3)
+                     ->get();
+}
+
 return view('dashboard', compact('items_count', 'live_count', 'not_started_count', 'ended_count', 'featuredItems'));
 
 }
