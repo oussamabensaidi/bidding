@@ -106,15 +106,29 @@
                     enableTime: true,
                     dateFormat: "Y-m-d H:i:S",
                 });
-                
+
                 document.getElementById('launchNow').addEventListener('change', function(){
-                    if(this.checked){
-                        document.querySelector('#start_time').disabled = true;
-                        document.querySelector('#start_time').placeholder = new Date().toISOString().slice(0, 16);
-                    }else{
-                        document.querySelector('#start_time').disabled = false;
-                    }
-                });
+    const startTimeInput = document.querySelector('#start_time');
+
+    if (this.checked) {
+        startTimeInput.disabled = true;
+        const now = new Date();
+        const formatted = now.getFullYear() + '-' +
+            String(now.getMonth() + 1).padStart(2, '0') + '-' +
+            String(now.getDate()).padStart(2, '0') + ' ' +
+            String(now.getHours()).padStart(2, '0') + ':' +
+            String(now.getMinutes()+1).padStart(2, '0') + ':' +
+            String(now.getSeconds()).padStart(2, '0');
+
+        startTimeInput.placeholder = formatted;
+        startTimeInput.value = formatted;
+    } else {
+        startTimeInput.disabled = false;
+        startTimeInput.placeholder = 'please choose start date and time';
+        startTimeInput.value = '';
+    }
+});
+
             </script>
     </div>
 </x-app-layout>
