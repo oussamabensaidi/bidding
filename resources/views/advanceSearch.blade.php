@@ -1,6 +1,12 @@
 <x-app-layout>
      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <x-slot name="header">
+        {{-- <x-slot name="header">
+            <h2 class="font-bold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Advanced Search Items') }}
+            </h2>
+           
+        </x-slot> --}}
+        <x-slot name="advancedSearch">
             <h2 class="font-bold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Advanced Search Items') }}
             </h2>
