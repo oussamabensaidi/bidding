@@ -26,7 +26,7 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
-        $user->fill($request->except('profile_picture')); // this is essentially the same as the commented out code below except for it 
+        $user->fill($request->except('profile_picture')); // this is essentially the same as $user->update($request->all()); 
         
         
         if ($request->user()->isDirty('email')) {
