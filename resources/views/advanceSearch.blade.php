@@ -1,26 +1,15 @@
 <x-app-layout>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <x-slot name="header">
             <h2 class="font-bold text-3xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('All Items') }}
+                {{ __('Advanced Search Items') }}
             </h2>
+           
         </x-slot>
 
         <!-- Search Results Banner -->
         <div class="container mx-auto px-4">
-            @isset($searchPerformed)
-                @if($searchPerformed)
-                    <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4 mb-6 rounded-lg">
-                        <div class="flex items-center">
-                            <svg class="h-5 w-5 text-indigo-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
-                            </svg>
-                            <p class="text-indigo-700 font-medium">Search results for: <span class="text-indigo-900">{{ $search }}</span></p>
-                        </div>
-                    </div>
-                    <!-- Highlighting script remains the same -->
-                @endif
-            @endisset
+            
         </div>
 
         <!-- Success Message -->
@@ -42,14 +31,6 @@
             </div>
         @endcan
 
-        <!-- Items Grid -->
-        {{-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-8">
-            @foreach ($items as $item)
-                @php
-                    $pics = is_string($item->item_pic) ? explode('|', $item->item_pic) : [];
-                @endphp
-                
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 group"> --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-8">
                 @foreach ($items as $item)
                 @php
@@ -131,13 +112,10 @@
                 </script>
             @endforeach
         </div>
- 
-        <div class="mb-8">
-            {{ $items->links() }}
-        </div>
+
+        
     </div>
     <script>
-       
         startCountdown = function (startTime, endTime, elementId) {
             let countDownDate = new Date(startTime).getTime();
             let endDate = new Date(endTime).getTime();

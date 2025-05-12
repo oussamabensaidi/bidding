@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Item;
+use COM;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -56,5 +57,10 @@ $featuredItems = Item::latest()
 
 return view('dashboard', compact('items_count', 'live_count', 'not_started_count', 'ended_count', 'featuredItems'));
 
+}
+public function advanceSearch()
+{
+    $items = Item::all();
+    return view('advanceSearch',compact('items'));
 }
 }
