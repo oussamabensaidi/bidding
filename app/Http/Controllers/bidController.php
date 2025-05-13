@@ -11,7 +11,13 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Carbon\Carbon;
 class bidController extends Controller
 {
-public function bid(Item $item){
+public function bid(Item $item ,Request $request){
+
+    // $this->validateLogin($request);
+     $request->validate([
+            'g-recaptcha-response' => 'required|string',
+        ]);
+
     return view('items.bid', compact('item'));
 }
 
