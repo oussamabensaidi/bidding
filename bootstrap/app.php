@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\CaptchaMiddleware;
+use App\Http\Middleware\EnsureHumanVerified;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->append(CaptchaMiddleware::class);
+        $middleware->alias([
+            'human.verified' => \App\Http\Middleware\EnsureHumanVerified::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

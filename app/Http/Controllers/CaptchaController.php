@@ -16,6 +16,10 @@ class CaptchaController extends Controller
     public function verify(Request $request , Item $item)
     {
         if($item){
+            $request->validate([
+            'g-recaptcha-response' => 'required',
+        ]);
+
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
             'secret' => env('NOCAPTCHA_SECRET'),
             'response' => $request->input('g-recaptcha-response'), // Different key for v2
@@ -27,7 +31,10 @@ class CaptchaController extends Controller
         if (!$body['success']) { // v2 doesn't use "score"
             return back()->withErrors(['captcha' => 'reCAPTCHA verification failed.']);
         }
-    
+        
+    session(['human_verified' => true]);
+
+
         return redirect()->route('items.bid', $item);
     }
     else{
@@ -37,4 +44,5 @@ class CaptchaController extends Controller
 
     
 }
+
 }

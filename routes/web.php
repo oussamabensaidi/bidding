@@ -14,7 +14,7 @@ Route::get('/', function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-
+// ---------------------------------------- things to add in the future: google recaptcha for the bidding page make sure it work fine no sneaking , online users , advance bidding system , making sure one user cant bid in different bids at the same time , good ui for phone users 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/advanceSearch', [DashboardController::class, 'advanceSearch'])->name('advanceSearch');
@@ -36,8 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/items/{item}/destroy', [ItemController::class, 'destroy'])->name('items.destroy');
     Route::delete('/items/{item}/delete-image', [ItemController::class, 'deleteImage'])->name('items.delete-image');
     Route::get('/items/clientShow/{item}', [ItemController::class, 'clientShow'])->name('items.clientShow');
-    Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
-    Route::patch('/items/bid/{item}', [bidController::class, 'updateBid'])->name('items.updateBid');
+
+
+    
+    Route::middleware('human.verified')->group(function(){
+        Route::get('/items/bid/{item}', [bidController::class, 'bid'])->name('items.bid');
+        Route::patch('/items/bid/{item}', [bidController::class, 'updateBid'])->name('items.updateBid');
+    });
     
     Route::post('/comment', [CommentController::class, 'comment'])->name('comment');
     
