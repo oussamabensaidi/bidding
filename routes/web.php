@@ -14,7 +14,7 @@ Route::get('/', function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-// ---------------------------------------- things to add in the future: google recaptcha for the bidding page make sure it work fine no sneaking , online users , advance bidding system , making sure one user cant bid in different bids at the same time , good ui for phone users 
+// ---------------------------------------- things to add in the future: google recaptcha for the bidding page make sure it work fine no sneaking , online users , advance bidding system (auto bidding), making sure one user cant bid in different bids at the same time , good ui for phone users ,client fyp, advance serach 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/advanceSearch', [DashboardController::class, 'advanceSearch'])->name('advanceSearch');
