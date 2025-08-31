@@ -17,18 +17,15 @@ A real-time auction system built with Laravel where users can bid on items, and 
 
 ## 🖼️ Screenshots
 
-> **Note:** Add screenshots of your application here:
 > - Dashboard view
+https://i.ibb.co/ymxyywY7/Desktop-Screenshot-2025-08-03-01-04-41-07.png
 > - Bidding interface
+https://i.ibb.co/cSn0mYdj/Desktop-Screenshot-2025-08-03-01-43-05-32.png
 > - Admin panel
+https://i.ibb.co/S4y6rhd2/Desktop-Screenshot-2025-08-03-01-41-19-21.png
 > - Real-time updates in action
+https://i.ibb.co/r2kHvm7g/Desktop-Screenshot-2025-08-03-01-43-46-17.png
 
-## 🚀 Live Demo
-
-> **Note:** If you have a live demo, add the link here:
-> - [Live Demo](https://your-demo-link.com)
-> - Test Admin: `admin@example.com` / `password123`
-> - Test Client: `client@example.com` / `password123`
 
 ## 🛠️ Technical Stack
 
