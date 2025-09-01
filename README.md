@@ -9,7 +9,7 @@
 A real-time auction system built with Laravel where users can bid on items, and admins can manage listings. Features live updates using WebSockets for seamless bid tracking and interaction.
 
 ### 🎯 Key Highlights
-- Real-time bidding with WebSocket integration
+- Real-time bidding with Laravel Reverb
 - Role-based access control (Admin/Client)
 - Bot protection with reCAPTCHA
 - Live comments and notifications
