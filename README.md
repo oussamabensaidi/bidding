@@ -18,16 +18,16 @@ A real-time auction system built with Laravel where users can bid on items, and 
 ## 🖼️ Screenshots
 
 - **Dashboard view**  
-  ![Dashboard](https://i.ibb.co/ymxyywY7/Desktop-Screenshot-2025-08-03-01-04-41-07.png)
+  ![Dashboard](public/Dashboard%20view.png)
 
 - **Bidding interface**  
-  ![Bidding](https://i.ibb.co/cSn0mYdj/Desktop-Screenshot-2025-08-03-01-43-05-32.png)
+  ![Bidding](public/Bidding%20interface.png)
 
 - **Admin panel**  
-  ![Admin](https://i.ibb.co/S4y6rhd2/Desktop-Screenshot-2025-08-03-01-41-19-21.png)
+  ![Admin](public/Admin%20panel.png)
 
 - **Real-time updates in action**  
-  ![Realtime](https://i.ibb.co/r2kHvm7g/Desktop-Screenshot-2025-08-03-01-43-46-17.png)
+  ![Realtime](public/Real-time%20updates%20in%20action.png)
 
 
 ## 🛠️ Technical Stack
