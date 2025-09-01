@@ -297,7 +297,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Oussama Ben Saidi**
-- Email: bensaidioussama7@gmail.com
+- Email: [Email support](mailto:bensaidioussama7@gmail.com)
 - GitHub: [@oussamabensaidi](https://github.com/oussamabensaidi)
 - Portfolio: https://bensaidioussama-portfolio.vercel.app/
 
